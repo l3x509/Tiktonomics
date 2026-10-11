@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiktonomics — TikTok Battle Earnings &amp; Coins to USD Calculator</title>
+  <meta name="description" content="Free TikTok & Bigo Live battle earnings calculator. Convert coins and Diamonds to USD, track battles, find co-hosts, view gift values, optimize your LIVE schedule, and estimate taxes — all in one place." />
+  <meta name="google-site-verification" content="zGlHrpmcLsp0P62df8tuFacDtLcITfkxlIec5vImbFU" />
+  <link rel="canonical" href="https://tiktonomics.com/" />
+  <meta property="og:title" content="Tiktonomics — TikTok Battle Earnings &amp; Coins to USD Calculator" />
+  <meta property="og:description" content="Free TikTok battle earnings calculator. Convert coins to USD, split co-host income, track battles, estimate taxes and more." />
+  <meta property="og:url" content="https://tiktonomics.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://tiktonomics.com/preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tiktonomics — TikTok Battle Earnings Calculator" />
+  <meta name="twitter:description" content="Free TikTok battle earnings calculator. Convert coins to USD, split co-host income, track battles, estimate taxes and more." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23010101'/%3E%3Cpath d='M62 18c0 0 2 10 14 13v10c0 0-8-1-14-6v27c0 13-10 23-23 23s-23-10-23-23 10-23 23-23c2 0 3 0 5 1v11c-1-1-3-1-5-1-7 0-12 5-12 12s5 12 12 12 12-5 12-12V18h11z' fill='white'/%3E%3Ccircle cx='67' cy='58' r='18' fill='%23D85A30' opacity='0.92'/%3E%3Ctext x='67' y='65' font-family='Arial Black,Arial' font-weight='900' font-size='20' fill='white' text-anchor='middle'%3E%24%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CW7ZTSWQHF"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CW7ZTSWQHF');</script>
+  <style>
+    :root{--font-sans:'DM Sans',sans-serif;--color-text-primary:#1a1a1a;--color-text-secondary:#666;--color-background-primary:#fff;--color-background-secondary:#f5f5f4;--color-background-info:#e8f0fe;--color-text-info:#1a56db;--color-border-secondary:#d1d5db;--color-border-tertiary:#e5e7eb;--border-radius-md:8px;--border-radius-lg:12px;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-sans);background:#fafaf9;color:var(--color-text-primary);min-height:100vh;}
+    .page-wrap{max-width:640px;margin:0 auto;padding:24px 16px 60px;}
+    .site-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--color-border-tertiary);}
+    .site-header-left{display:flex;align-items:center;gap:10px;}
+    .site-header h1{font-size:20px;font-weight:600;color:var(--color-text-primary);}
+    .site-header p{font-size:12px;color:var(--color-text-secondary);}
+    /* ── Language Dropdown ── */
+    .lang-wrap{position:relative;}
+    .lang-btn{padding:5px 12px;font-size:12px;font-weight:600;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);border-radius:20px;cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;gap:4px;transition:all 0.15s;}
+    .lang-btn:hover{border-color:#D85A30;color:#D85A30;}
+    .lang-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:6px;z-index:400;box-shadow:0 4px 20px rgba(0,0,0,0.12);display:none;flex-direction:column;gap:2px;min-width:130px;}
+    .lang-dropdown.open{display:flex;}
+    .lang-option{font-size:13px;padding:8px 12px;border-radius:var(--border-radius-md);border:none;background:none;color:var(--color-text-primary);cursor:pointer;text-align:left;font-family:var(--font-sans);display:flex;align-items:center;gap:8px;transition:background 0.12s;}
+    .lang-option:hover{background:var(--color-background-secondary);}
+    .lang-option.active{background:#D85A30;color:#fff;}
+    /* ── Nav ── */
+    .nav-wrap{position:relative;margin-bottom:1.5rem;}
+    .nav{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-bottom:0;padding-bottom:2px;}
+    .nav::-webkit-scrollbar{display:none;}
+    .nav button{flex-shrink:0;font-size:15px;padding:6px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;font-family:var(--font-sans);}
+    .nav button.active{background:#D85A30;color:#fff;border-color:#D85A30;}
+    .nav-blog-link{flex-shrink:0;font-size:15px;padding:6px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans);text-decoration:none;display:inline-flex;align-items:center;transition:all 0.15s;}
+    .nav-blog-link:hover{border-color:#D85A30;color:#D85A30;}
+    .more-btn{flex-shrink:0;font-size:13px;padding:6px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans);transition:all 0.15s;}
+    .more-btn.has-active{background:#D85A30;color:#fff;border-color:#D85A30;}
+    .more-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:6px;z-index:300;box-shadow:0 4px 24px rgba(0,0,0,0.12);display:none;flex-direction:column;gap:3px;min-width:160px;}
+    .more-dropdown.open{display:flex;}
+    .more-dropdown button{font-size:13px;padding:9px 14px;border-radius:var(--border-radius-md);border:none;background:none;color:var(--color-text-primary);cursor:pointer;text-align:left;font-family:var(--font-sans);transition:background 0.12s;}
+    .more-dropdown button:hover{background:var(--color-background-secondary);}
+    .more-dropdown button.active{background:#D85A30;color:#fff;}
+    /* ── Panels ── */
+    .panel{display:none;}
+    .panel.active{display:block;}
+    /* Dashboard sections controlled by JS only */
+    #dashboard-content,#dashboard-no-data{display:none;}
+    .tab-heading{font-size:17px;font-weight:600;color:var(--color-text-primary);margin-bottom:4px;}
+    .tab-subheading{font-size:12px;color:var(--color-text-secondary);margin-bottom:16px;}
+    /* ── Cards / Layout ── */
+    .card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1rem;}
+    .label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;}
+    .value{font-size:22px;font-weight:500;color:var(--color-text-primary);}
+    .value.net{color:#3B6D11;}
+    .value.coral{color:#D85A30;}
+    .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1rem;}
+    .input-group{margin-bottom:1rem;}
+    .input-group label{display:block;font-size:13px;color:var(--color-text-secondary);margin-bottom:6px;}
+    .breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;}
+    .breakdown-row:last-child{border-bottom:none;}
+    .breakdown-row .cut{color:#A32D2D;font-size:12px;}
+    .breakdown-row .net{color:#3B6D11;font-weight:500;}
+    .toggle-group{display:flex;gap:8px;margin-bottom:1rem;}
+    .toggle-group button{flex:1;padding:8px;font-size:12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans);}
+    .toggle-group button.active{background:#D85A30;color:#fff;border-color:#D85A30;}
+    .log-entry{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;}
+    .log-entry:last-child{border-bottom:none;}
+    .badge{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--color-background-info);color:var(--color-text-info);}
+    .badge.win{background:#EAF3DE;color:#3B6D11;}
+    .badge.loss{background:#FCEBEB;color:#A32D2D;}
+    .section-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:12px;}
+    .goal-bar-wrap{background:var(--color-background-secondary);border-radius:4px;height:8px;margin:8px 0;overflow:hidden;}
+    .goal-bar{height:8px;background:#D85A30;border-radius:4px;transition:width 0.3s;}
+    .scan-zone{border:1.5px dashed var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:2rem 1rem;text-align:center;margin-bottom:1rem;cursor:pointer;transition:background 0.15s;}
+    .scan-zone:hover{background:var(--color-background-secondary);}
+    .scan-icon{font-size:28px;margin-bottom:8px;}
+    .tax-band{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;}
+    .tax-band:last-child{border-bottom:none;}
+    .tax-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+    select,input[type=number],input[type=text],textarea{width:100%;padding:8px 10px;font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);font-family:var(--font-sans);}
+    textarea{resize:vertical;min-height:60px;}
+    input[type=range]{width:100%;}
+    .action-btn{width:100%;padding:10px;font-size:13px;font-weight:500;border-radius:var(--border-radius-md);background:#D85A30;color:#fff;border:none;cursor:pointer;margin-top:8px;transition:opacity 0.15s;font-family:var(--font-sans);}
+    .action-btn:hover{opacity:0.88;}
+    .split-bar-wrap{display:flex;height:10px;border-radius:10px;overflow:hidden;margin:10px 0;}
+    .split-a{background:#D85A30;transition:width 0.2s;}
+    .split-b{background:#378ADD;transition:width 0.2s;}
+    .empty-state{text-align:center;padding:2rem 1rem;color:var(--color-text-secondary);font-size:13px;}
+    .scenario-btn{font-size:13px;padding:4px 10px;border:0.5px solid var(--color-border-secondary);border-radius:20px;background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;margin-right:6px;margin-bottom:6px;font-family:var(--font-sans);}
+    .scenario-btn:hover{border-color:#D85A30;color:#D85A30;}
+    /* ── Platform selector (TikTok / Bigo) ── */
+    .platform-select-wrap{margin-bottom:14px;}
+    .platform-select{display:flex;gap:8px;}
+    .platform-select button{flex:1;padding:10px 8px;font-size:13px;font-weight:500;border-radius:var(--border-radius-md);border:1.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.15s;}
+    .platform-select button.active{border-color:#D85A30;background:#FEF0EB;color:#D85A30;font-weight:600;}
+    .platform-select button.active.bigo-active{border-color:#7C3AED;background:#F3EEFF;color:#7C3AED;}
+    .bigo-note{font-size:11px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px;margin-bottom:1rem;line-height:1.5;}
+    .bigo-note strong{color:var(--color-text-primary);}
+    .platform-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:0.3px;vertical-align:middle;margin-left:6px;}
+    .platform-badge.tt{background:#FEF0EB;color:#D85A30;}
+    .platform-badge.bigo{background:#F3EEFF;color:#7C3AED;}
+    .clear-btn{font-size:11px;padding:4px 10px;border:0.5px solid #A32D2D;border-radius:20px;background:#FCEBEB;color:#A32D2D;cursor:pointer;font-family:var(--font-sans);margin-top:8px;}
+    .export-btn{font-size:11px;padding:4px 10px;border:0.5px solid #3B6D11;border-radius:20px;background:#EAF3DE;color:#3B6D11;cursor:pointer;font-family:var(--font-sans);margin-top:8px;}
+    .verified-note{font-size:10.5px;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px;margin-top:8px;}
+    .verified-note svg{flex-shrink:0;color:#3B6D11;}
+    /* ── Share button ── */
+    .share-btn{width:100%;padding:9px;font-size:13px;font-weight:500;border-radius:var(--border-radius-md);background:transparent;color:#D85A30;border:1.5px solid #D85A30;cursor:pointer;margin-top:16px;transition:all 0.15s;font-family:var(--font-sans);display:flex;align-items:center;justify-content:center;gap:6px;}
+    .share-btn:hover{background:#D85A30;color:#fff;}
+    .share-btn.copied{background:#EAF3DE;color:#3B6D11;border-color:#3B6D11;}
+    /* ── Dashboard ── */
+    .chart-wrap{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem;margin-bottom:1rem;}
+    .chart-title{font-size:12px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+    .dash-stat{text-align:center;}
+    .dash-stat .label{font-size:11px;}
+    .dash-stat .value{font-size:18px;}
+    .no-data-msg{text-align:center;padding:1.5rem;color:var(--color-text-secondary);font-size:13px;}
+    /* ── Gift Values ── */
+    .gift-search-box{width:100%;padding:10px 14px;font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);font-family:var(--font-sans);margin-bottom:12px;}
+    .gift-table-wrap{overflow-x:auto;}
+    .gift-table{width:100%;border-collapse:collapse;font-size:13px;}
+    .gift-table th{text-align:left;padding:8px 10px;background:var(--color-background-secondary);color:var(--color-text-primary);font-weight:600;border-bottom:0.5px solid var(--color-border-secondary);font-size:11px;text-transform:uppercase;letter-spacing:0.4px;}
+    .gift-table td{padding:9px 10px;border-bottom:0.5px solid var(--color-border-tertiary);}
+    .gift-table tr:last-child td{border-bottom:none;}
+    .gift-table tbody tr:hover td{background:var(--color-background-secondary);}
+    .gift-name{font-weight:500;color:var(--color-text-primary);}
+    .gift-creator{color:#3B6D11;font-weight:500;}
+    .gift-tier{font-size:10px;padding:2px 7px;border-radius:10px;}
+    .tier-small{background:#F3F3F2;color:#888780;}
+    .tier-mid{background:#EAF3DE;color:#3B6D11;}
+    .tier-large{background:#E8F0FE;color:#185FA5;}
+    .tier-whale{background:#EDE9FE;color:#7C3AED;}
+    /* ── Leaderboard ── */
+    .lb-entry{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
+    .lb-entry:last-child{border-bottom:none;}
+    .lb-rank{font-size:20px;width:30px;text-align:center;flex-shrink:0;}
+    .lb-info{flex:1;}
+    .lb-name{font-size:13px;font-weight:500;color:var(--color-text-primary);}
+    .lb-meta{font-size:11px;color:var(--color-text-secondary);}
+    .lb-amount{font-size:15px;font-weight:600;color:#3B6D11;}
+    /* ── Co-host Finder ── */
+    .cohost-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+    .cohost-handle{font-size:14px;font-weight:500;color:#D85A30;}
+    .cohost-meta{font-size:12px;color:var(--color-text-secondary);margin-top:2px;}
+    .cohost-avail{font-size:11px;padding:3px 8px;border-radius:10px;background:#EAF3DE;color:#3B6D11;white-space:nowrap;flex-shrink:0;}
+    /* ── LIVE Optimizer ── */
+    .time-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem;}
+    .time-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px;}
+    .time-tz{font-size:10px;font-weight:600;color:#D85A30;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+    .time-best{font-size:13px;font-weight:500;color:var(--color-text-primary);}
+    .time-days{font-size:11px;color:var(--color-text-secondary);margin-top:2px;}
+    .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+    .hashtag{font-size:12px;padding:4px 10px;border-radius:20px;background:var(--color-background-info);color:var(--color-text-info);cursor:pointer;transition:background 0.15s;}
+    .hashtag:hover{background:#c7d9fb;}
+    .hashtag.copied{background:#EAF3DE;color:#3B6D11;}
+    .tip-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;}
+    .tip-row:last-child{border-bottom:none;}
+    .tip-icon{font-size:16px;flex-shrink:0;}
+    /* ── FAQ ── */
+    .faq-item{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);margin-bottom:8px;background:var(--color-background-primary);overflow:hidden;}
+    .faq-question{width:100%;text-align:left;padding:14px 16px;font-size:14px;font-weight:500;color:var(--color-text-primary);background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:var(--font-sans);line-height:1.4;}
+    .faq-question:hover{background:var(--color-background-secondary);}
+    .faq-chevron{flex-shrink:0;font-size:12px;color:var(--color-text-secondary);transition:transform 0.2s;}
+    .faq-item.open .faq-chevron{transform:rotate(180deg);}
+    .faq-answer{display:none;padding:0 16px 14px;font-size:13px;color:var(--color-text-secondary);line-height:1.7;border-top:0.5px solid var(--color-border-tertiary);}
+    .faq-item.open .faq-answer{display:block;}
+    .faq-answer strong{color:var(--color-text-primary);}
+    .faq-answer table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px;}
+    .faq-answer th,.faq-answer td{text-align:left;padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary);}
+    .faq-answer th{font-weight:600;color:var(--color-text-primary);background:var(--color-background-secondary);}
+    .faq-category{font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:#D85A30;margin:20px 0 8px;}
+    .faq-category:first-of-type{margin-top:0;}
+    /* ── Footer ── */
+    .footer{text-align:center;font-size:11px;color:#aaa;margin-top:40px;padding-top:16px;border-top:1px solid var(--color-border-tertiary);}
+    /* ── Dash link bar ── */
+    .dash-link-bar{display:flex;align-items:center;justify-content:center;margin-top:24px;padding-top:16px;border-top:0.5px solid var(--color-border-tertiary);}
+    .dash-link-btn{font-size:12px;padding:6px 16px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans);text-decoration:none;transition:all 0.15s;}
+    .dash-link-btn:hover{border-color:#D85A30;color:#D85A30;}
+    /* ── Loading spinner ── */
+    .lang-loading{font-size:11px;color:var(--color-text-secondary);padding:4px 8px;}
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="site-header">
+    <div class="site-header-left">
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36" height="36" style="display:block;border-radius:8px;">
+          <rect width="100" height="100" rx="20" fill="#010101"/>
+          <path d="M62 18c0 0 2 10 14 13v10c0 0-8-1-14-6v27c0 13-10 23-23 23s-23-10-23-23 10-23 23-23c2 0 3 0 5 1v11c-1-1-3-1-5-1-7 0-12 5-12 12s5 12 12 12 12-5 12-12V18h11z" fill="white"/>
+          <circle cx="67" cy="58" r="18" fill="#D85A30" opacity="0.93"/>
+          <text x="67" y="65" font-family="Arial Black,Arial" font-weight="900" font-size="20" fill="white" text-anchor="middle">$</text>
+        </svg>
+      </div>
+      <div>
+        <h1 id="site-title">TikTok Gifts to USD Calculator</h1>
+        <p id="site-sub">Earnings · splits · logs · goals · taxes</p>
+      </div>
+    </div>
+    <!-- Language Dropdown -->
+    <div class="lang-wrap">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangDropdown(event)" aria-label="Select language">
+        🌐 <span id="lang-label">EN</span> ▾
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-option active" id="lang-opt-en" onclick="selectLang('en')">🇺🇸 English</button>
+        <button class="lang-option" id="lang-opt-fr" onclick="selectLang('fr')">🇫🇷 Français</button>
+        <button class="lang-option" id="lang-opt-es" onclick="selectLang('es')">🇪🇸 Español</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hub">
+    <div class="nav-wrap">
+      <div class="nav">
+        <button onclick="switchTab('dashboard',this)" id="nav-dashboard">Dashboard</button>
+        <button onclick="switchTab('ttearn',this)" id="nav-ttearn">Creator Earnings</button>
+        <button class="active" onclick="switchTab('calc',this)" id="nav-calc">Calculator</button>
+        <button onclick="switchTab('split',this)" id="nav-split">Co-host</button>
+        <button onclick="switchTab('log',this)" id="nav-log">Battle Log</button>
+        <button onclick="switchTab('gifts',this)" id="nav-gifts">Gift Values</button>
+        <a href="https://tiktonomics.com/blog/" target="_blank" class="nav-blog-link" id="nav-blog">📝 Blog</a>
+        <button class="more-btn" id="more-btn" onclick="toggleMore(event)">More ▾</button>
+      </div>
+      <div class="more-dropdown" id="more-dropdown">
+        <button onclick="switchTabMore('scanner',this)" id="nav-scanner">📸 Scoreboard</button>
+        <button onclick="switchTabMore('goal',this)" id="nav-goal">🎯 Gift Goal</button>
+        <button onclick="switchTabMore('tax',this)" id="nav-tax">🧾 Tax</button>
+        <button onclick="switchTabMore('optimizer',this)" id="nav-optimizer">⏰ LIVE Tips</button>
+        <button onclick="switchTabMore('faq',this)" id="nav-faq">❓ FAQs</button>
+      </div>
+    </div>
+
+    <!-- ═══ CALCULATOR ═══ -->
+    <div class="panel active" id="tab-calc">
+      <h2 class="tab-heading" id="calc-heading">TikTok Battle Earnings Calculator</h2>
+      <p class="tab-subheading" id="calc-sub">Convert TikTok coins to USD — see exactly what you take home after platform fees.</p>
+      <div class="platform-select-wrap">
+        <div class="platform-select">
+          <button id="site-plat-tiktok" class="active" onclick="setSitePlatform('tiktok')">⚔️ TikTok</button>
+          <button id="site-plat-bigo" onclick="setSitePlatform('bigo')">🎮 Bigo Live</button>
+        </div>
+      </div>
+      <div style="margin-bottom:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+        <span style="font-size:12px;color:var(--color-text-secondary);" id="calc-scenarios-label">Quick scenarios:</span>
+        <button class="scenario-btn" onclick="setScenario(50000)" id="sc-small">Small streamer</button>
+        <button class="scenario-btn" onclick="setScenario(200000)" id="sc-mid">Mid-tier</button>
+        <button class="scenario-btn" onclick="setScenario(1000000)" id="sc-top">Top streamer</button>
+      </div>
+      <div class="input-group"><label id="lbl-coins">Coins received per battle</label><input type="number" id="coins" value="50000" oninput="calcEarnings()" min="0"/></div>
+      <div class="input-group"><label id="lbl-battles">Battles per week</label><input type="number" id="battles" value="5" oninput="calcEarnings()" min="1"/></div>
+      <div class="input-group" id="platform-toggle-wrap">
+        <label id="lbl-platform">Purchase platform (affects creator payout)</label>
+        <div class="toggle-group">
+          <button id="plat-ios" class="active" onclick="setPlatform('ios')">iOS (Apple 30% cut)</button>
+          <button id="plat-and" onclick="setPlatform('android')">Android / Web</button>
+        </div>
+      </div>
+      <div class="bigo-note" id="bigo-note" style="display:none;">💡 Creator payout (<strong>~$0.0024/Diamond</strong>) is well-documented and doesn't vary by purchase source. Viewer cost varies 2–3× by bundle/region, so we show a range rather than a single "cut %." Min. withdrawal <strong>$31.90</strong> (6,700 Beans), capped at <strong>$5,000/week</strong>. Bigo's Official Host program also offers a guaranteed base salary on top of gifts — something TikTok doesn't have.
+        <div class="verified-note" style="margin-top:6px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Bigo rates verified July 2026</span></div>
+      </div>
+      <div class="card"><div class="section-title" id="lbl-breakdown-title">Where your money goes</div><div id="breakdown"></div><div class="verified-note"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span id="calc-verified-date">Rates verified July 2026</span></div></div>
+      <div class="row">
+        <div class="card" style="margin-bottom:0"><div class="label" id="lbl-per-battle">Per battle</div><div class="value net" id="r-battle">—</div></div>
+        <div class="card" style="margin-bottom:0"><div class="label" id="lbl-per-week">Per week</div><div class="value net" id="r-week">—</div></div>
+        <div class="card" style="margin-bottom:0"><div class="label" id="lbl-per-month">Per month</div><div class="value net" id="r-month">—</div></div>
+      </div>
+      <button class="share-btn" id="share-calc" onclick="shareTab('calc')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+      <div class="dash-link-bar"><button class="dash-link-btn" onclick="goToDashboard()">📊 View Dashboard</button></div>
+    </div>
+
+    <!-- ═══ SCANNER ═══ -->
+    <div class="panel" id="tab-scanner">
+      <h2 class="tab-heading" id="scanner-heading">TikTok Battle Scoreboard Scanner</h2>
+      <p class="tab-subheading" id="scanner-sub">Upload your battle scoreboard screenshot or enter scores manually.</p>
+      <div class="scan-zone" onclick="document.getElementById('img-upload').click()">
+        <div class="scan-icon">📸</div>
+        <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;" id="scan-upload-title">Upload scoreboard screenshot</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);" id="scan-upload-sub">Tap to choose image from your device</div>
+        <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="handleScan(event)"/>
+      </div>
+      <div class="card" style="margin-bottom:1rem;">
+        <div class="section-title" id="scan-manual-title">Or enter scores manually</div>
+        <div class="input-group" style="margin-bottom:8px;"><label id="lbl-scan-your">Your score (coins)</label><input type="number" id="scan-your" placeholder="e.g. 125000" oninput="calcScan()"/></div>
+        <div class="input-group" style="margin-bottom:0;"><label id="lbl-scan-opp">Opponent score (coins)</label><input type="number" id="scan-opp" placeholder="e.g. 89000" oninput="calcScan()"/></div>
+      </div>
+      <div id="scan-result" style="display:none">
+        <div class="row">
+          <div class="card" style="margin-bottom:0"><div class="label" id="lbl-you-earned">You earned</div><div class="value net" id="scan-you-earn">—</div></div>
+          <div class="card" style="margin-bottom:0"><div class="label" id="lbl-opp-earned">Opponent earned</div><div class="value coral" id="scan-opp-earn">—</div></div>
+        </div>
+        <div class="card" style="margin-top:10px;margin-bottom:0">
+          <div class="breakdown-row"><span id="lbl-scan-winner">Winner</span><span id="scan-winner" style="font-weight:500;color:var(--color-text-primary);"></span></div>
+          <div class="breakdown-row"><span id="lbl-scan-diff">Coin difference</span><span id="scan-diff"></span></div>
+          <div class="breakdown-row"><span id="lbl-scan-total">Total coins in battle</span><span id="scan-total"></span></div>
+        </div>
+      </div>
+      <div id="scan-ai-note" style="display:none;font-size:12px;color:var(--color-text-secondary);margin-top:8px;padding:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);">Image uploaded. Enter the coin counts from the scoreboard manually above.</div>
+      <button class="share-btn" id="share-scanner" onclick="shareTab('scanner')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+    </div>
+
+    <!-- ═══ CO-HOST ═══ -->
+    <div class="panel" id="tab-split">
+      <h2 class="tab-heading" id="split-heading">Co-host Split & Finder</h2>
+      <p class="tab-subheading" id="split-sub">Calculate your earnings split and find or list co-hosts for battles.</p>
+      <div class="card">
+        <div class="section-title" id="lbl-split-calc-title">Split Calculator</div>
+        <div class="input-group"><label id="lbl-sp-coins">Total coins in the battle</label><input type="number" id="sp-coins" value="100000" oninput="calcSplit()"/></div>
+        <div class="input-group">
+          <label id="lbl-sp-pct">Your split: <span id="sp-pct-label">60</span>%</label>
+          <input type="range" id="sp-pct" min="10" max="90" value="60" step="5" oninput="calcSplit()"/>
+        </div>
+        <div class="input-group">
+          <label id="lbl-sp-platform">Purchase platform</label>
+          <div class="toggle-group"><button id="sp-ios" class="active" onclick="setSpPlatform('ios')">iOS</button><button id="sp-and" onclick="setSpPlatform('android')">Android / Web</button></div>
+        </div>
+        <div class="section-title" id="lbl-split-breakdown">Split breakdown</div>
+        <div class="split-bar-wrap"><div class="split-a" id="sp-bar-a" style="width:60%"></div><div class="split-b" id="sp-bar-b" style="width:40%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-secondary);margin-bottom:12px;">
+          <span style="color:#D85A30" id="lbl-sp-you-label">You</span><span style="color:#378ADD" id="lbl-sp-cohost-label">Co-host</span>
+        </div>
+        <div class="breakdown-row"><span id="lbl-sp-you">You take home</span><span class="net" id="sp-you">—</span></div>
+        <div class="breakdown-row"><span id="lbl-sp-cohost">Co-host takes home</span><span style="color:#185FA5;font-weight:500" id="sp-cohost">—</span></div>
+        <div class="breakdown-row"><span id="lbl-sp-fees">TikTok + platform fees</span><span class="cut" id="sp-fees">—</span></div>
+      </div>
+      <div class="card">
+        <div class="section-title" id="lbl-cohost-add-title">Add yourself to the Co-host Directory</div>
+        <div class="row" style="margin-bottom:8px;">
+          <div class="input-group" style="margin-bottom:0"><label id="lbl-ch-handle">Your @handle</label><input type="text" id="ch-handle" placeholder="@username"/></div>
+          <div class="input-group" style="margin-bottom:0"><label id="lbl-ch-followers">Followers</label><input type="number" id="ch-followers" placeholder="50000"/></div>
+        </div>
+        <div class="row" style="margin-bottom:8px;">
+          <div class="input-group" style="margin-bottom:0">
+            <label id="lbl-ch-niche">Niche</label>
+            <select id="ch-niche"><option>General / Lifestyle</option><option>Beauty / Fashion</option><option>Gaming</option><option>Finance / Business</option><option>Food / Cooking</option><option>Fitness / Health</option><option>Comedy</option><option>Education</option><option>Tech</option><option>Music</option></select>
+          </div>
+          <div class="input-group" style="margin-bottom:0">
+            <label id="lbl-ch-tz">Timezone</label>
+            <select id="ch-tz"><option>EST (UTC-5)</option><option>CST (UTC-6)</option><option>MST (UTC-7)</option><option>PST (UTC-8)</option><option>GMT (UTC+0)</option><option>CET (UTC+1)</option><option>Other</option></select>
+          </div>
+        </div>
+        <div class="input-group"><label id="lbl-ch-avail">Availability</label><input type="text" id="ch-avail" placeholder="e.g. Weekday evenings, weekends"/></div>
+        <button class="action-btn" onclick="addCohost()" id="lbl-ch-add">Add to directory</button>
+      </div>
+      <div id="cohost-list-wrap">
+        <div class="section-title" style="margin-bottom:8px;">
+          <span id="lbl-cohost-dir-title">Co-host Directory</span>
+          <span style="font-size:11px;color:var(--color-text-secondary);font-weight:400;" id="cohost-shared-label"> (shared — visible to all users)</span>
+        </div>
+        <div id="cohost-list"></div>
+        <div class="empty-state" id="cohost-empty">No co-hosts listed yet. Be the first to add yourself above.</div>
+      </div>
+      <button class="share-btn" id="share-split" onclick="shareTab('split')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+      <div class="dash-link-bar"><button class="dash-link-btn" onclick="goToDashboard()">📊 View Dashboard</button></div>
+    </div>
+
+    <!-- ═══ BATTLE LOG ═══ -->
+    <div class="panel" id="tab-log">
+      <h2 class="tab-heading" id="log-heading">Battle Log & Leaderboard</h2>
+      <p class="tab-subheading" id="log-sub">Track your battles, measure your growth, and see your personal top performances.</p>
+      <div class="card">
+        <div class="section-title" id="lbl-log-title">Log a battle</div>
+        <div class="row" style="margin-bottom:8px;">
+          <div class="input-group" style="margin-bottom:0"><label id="lbl-log-coins">Coins received</label><input type="number" id="log-coins" placeholder="50000"/></div>
+          <div class="input-group" style="margin-bottom:0"><label id="lbl-log-opp">Opponent name</label><input type="text" id="log-opp" placeholder="@username"/></div>
+        </div>
+        <div class="toggle-group" style="margin-bottom:8px;">
+          <button id="log-win" class="active" onclick="setResult('win')">Win</button>
+          <button id="log-loss" onclick="setResult('loss')">Loss</button>
+        </div>
+        <button class="action-btn" onclick="addLog()" id="lbl-log-add">Add to log</button>
+      </div>
+      <div id="log-stats" style="display:none">
+        <div class="row">
+          <div class="card" style="margin-bottom:0"><div class="label" id="lbl-log-total">Total earned</div><div class="value net" id="log-total">—</div></div>
+          <div class="card" style="margin-bottom:0"><div class="label" id="lbl-log-winrate">Win rate</div><div class="value" id="log-winrate">—</div></div>
+          <div class="card" style="margin-bottom:0"><div class="label" id="lbl-log-best">Best battle</div><div class="value coral" id="log-best">—</div></div>
+        </div>
+      </div>
+      <div id="lb-section" style="display:none;margin-top:0.5rem;">
+        <div class="card"><div class="section-title" id="lbl-lb-title">🏆 Personal Leaderboard — Top Battles</div><div id="lb-list"></div></div>
+      </div>
+      <div id="log-list"></div>
+      <div style="display:none;justify-content:space-between;align-items:center;margin-top:4px;gap:8px;" id="log-actions">
+        <button class="export-btn" onclick="exportBattleLogCSV()" id="lbl-log-export">⬇ Export CSV</button>
+        <button class="clear-btn" onclick="clearLog()" id="lbl-log-clear">Clear all logs</button>
+      </div>
+      <div class="empty-state" id="log-empty">No battles logged yet. Add your first one above.</div>
+      <button class="share-btn" id="share-log" onclick="shareTab('log')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+      <div class="dash-link-bar"><button class="dash-link-btn" onclick="goToDashboard()">📊 View Dashboard</button></div>
+    </div>
+
+    <!-- ═══ GIFT GOAL ═══ -->
+    <div class="panel" id="tab-goal">
+      <h2 class="tab-heading" id="goal-heading">TikTok Gift Goal Planner</h2>
+      <p class="tab-subheading" id="goal-sub">Calculate exactly how many battles and coins you need to hit your weekly income target.</p>
+      <div class="input-group"><label id="lbl-goal-target">Income goal (USD per week)</label><input type="number" id="goal-target" value="500" oninput="calcGoal()"/></div>
+      <div class="input-group"><label id="lbl-goal-avg">Average coins per battle</label><input type="number" id="goal-avgcoins" value="50000" oninput="calcGoal()"/></div>
+      <div class="input-group">
+        <label id="lbl-goal-platform">Purchase platform</label>
+        <div class="toggle-group"><button id="goal-ios" class="active" onclick="setGoalPlatform('ios')">iOS</button><button id="goal-and" onclick="setGoalPlatform('android')">Android / Web</button></div>
+      </div>
+      <div class="card">
+        <div class="section-title" id="lbl-goal-needs">What you need to hit your goal</div>
+        <div class="breakdown-row"><span id="lbl-goal-battles">Battles needed per week</span><span style="font-weight:500;color:var(--color-text-primary);" id="goal-battles">—</span></div>
+        <div class="breakdown-row"><span id="lbl-goal-coins">Total coins needed per week</span><span style="font-weight:500;color:var(--color-text-primary);" id="goal-total-coins">—</span></div>
+        <div class="breakdown-row"><span id="lbl-goal-daily">Coins needed per day</span><span style="font-weight:500;color:var(--color-text-primary);" id="goal-daily">—</span></div>
+        <div style="margin-top:14px;">
+          <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;" id="lbl-goal-progress">Progress tracker — coins received today</div>
+          <input type="number" id="goal-progress" placeholder="0" oninput="calcGoal()" style="margin-bottom:8px;"/>
+          <div class="goal-bar-wrap"><div class="goal-bar" id="goal-bar" style="width:0%"></div></div>
+          <div style="font-size:12px;color:var(--color-text-secondary);text-align:right;" id="goal-pct">0% of daily target</div>
+        </div>
+      </div>
+      <button class="share-btn" id="share-goal" onclick="shareTab('goal')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+      <div class="dash-link-bar"><button class="dash-link-btn" onclick="goToDashboard()">📊 View Dashboard</button></div>
+    </div>
+
+    <!-- ═══ TAX ═══ -->
+    <div class="panel" id="tab-tax">
+      <h2 class="tab-heading" id="tax-heading">TikTok Creator Tax Estimator</h2>
+      <p class="tab-subheading" id="tax-sub">Estimate your US self-employment taxes and how much to set aside each month.</p>
+      <div class="input-group"><label id="lbl-tax-monthly">Estimated monthly earnings (USD)</label><input type="number" id="tax-monthly" value="2000" oninput="calcTax()"/></div>
+      <div class="input-group">
+        <label id="lbl-tax-filing">Filing status</label>
+        <select id="tax-filing" onchange="calcTax()">
+          <option value="single">Single</option><option value="married">Married filing jointly</option>
+          <option value="married_sep">Married filing separately</option><option value="head">Head of household</option>
+          <option value="surviving">Qualifying surviving spouse</option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="card" style="margin-bottom:0"><div class="label" id="lbl-tax-annual">Annual gross</div><div class="value" id="tax-annual">—</div></div>
+        <div class="card" style="margin-bottom:0"><div class="label" id="lbl-tax-setaside">Set aside monthly</div><div class="value coral" id="tax-setaside">—</div></div>
+        <div class="card" style="margin-bottom:0"><div class="label" id="lbl-tax-rate">Est. tax rate</div><div class="value" id="tax-rate">—</div></div>
+      </div>
+      <div class="card" style="margin-top:1rem;">
+        <div class="section-title" id="lbl-tax-breakdown">Estimated tax breakdown</div>
+        <div class="tax-band"><div class="tax-dot" style="background:#D85A30"></div><span style="flex:1" id="lbl-tax-se">Self-employment tax (15.3%)</span><span id="tax-se" style="font-weight:500;color:var(--color-text-primary);"></span></div>
+        <div class="tax-band"><div class="tax-dot" style="background:#378ADD"></div><span style="flex:1" id="lbl-tax-fed">Federal income tax (est.)</span><span id="tax-fed" style="font-weight:500;color:var(--color-text-primary);"></span></div>
+        <div class="tax-band"><div class="tax-dot" style="background:#888780"></div><span style="flex:1" id="lbl-tax-deduct">Deductible SE half</span><span id="tax-deduct" style="font-weight:500;color:#3B6D11;"></span></div>
+      </div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-top:10px;line-height:1.6;" id="lbl-tax-note">This is an estimate for US creators only. Consult a tax professional.</div>
+      <div class="verified-note"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Tax brackets verified for 2026</span></div>
+      <button class="share-btn" id="share-tax" onclick="shareTab('tax')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+      <div class="dash-link-bar"><button class="dash-link-btn" onclick="goToDashboard()">📊 View Dashboard</button></div>
+    </div>
+
+    <!-- ═══ CREATOR EARNINGS ═══ -->
+    <div class="panel" id="tab-ttearn">
+      <h2 class="tab-heading" id="ttearn-heading">Creator Earnings Estimator</h2>
+      <p class="tab-subheading" id="ttearn-sub">Estimate monthly income from the Creator Fund, brand deals, and affiliate revenue.</p>
+      <div class="row">
+        <div class="input-group" style="margin-bottom:0"><label id="lbl-tte-followers">Total Followers</label><input type="number" id="tte-followers" value="100000" oninput="calcTTEarn()"/></div>
+        <div class="input-group" style="margin-bottom:0"><label id="lbl-tte-views">Avg Views per Video</label><input type="number" id="tte-views" value="50000" oninput="calcTTEarn()"/></div>
+      </div>
+      <div class="row">
+        <div class="input-group" style="margin-bottom:0"><label id="lbl-tte-vpw">Videos per Week</label><input type="number" id="tte-vpw" value="5" min="1" oninput="calcTTEarn()"/></div>
+        <div class="input-group" style="margin-bottom:0"><label id="lbl-tte-eng">Engagement Rate (%)</label><input type="number" id="tte-eng" value="5" min="0" max="100" step="0.1" oninput="calcTTEarn()"/></div>
+      </div>
+      <div class="input-group">
+        <label id="lbl-tte-niche">Content Niche</label>
+        <select id="tte-niche" onchange="calcTTEarn()">
+          <option value="1.0">General / Lifestyle</option><option value="1.3">Beauty / Fashion</option>
+          <option value="2.0">Finance / Business</option><option value="0.9">Gaming</option>
+          <option value="1.1">Food / Cooking</option><option value="1.2">Fitness / Health</option>
+          <option value="0.8">Comedy / Entertainment</option><option value="1.4">Education</option>
+          <option value="1.1">Travel</option><option value="1.5">Tech / Software</option>
+        </select>
+      </div>
+      <div id="tte-tier-wrap" style="text-align:center;margin-bottom:1rem;">
+        <span id="tte-tier" style="display:inline-block;padding:6px 20px;border-radius:20px;font-size:13px;font-weight:500;background:#EAF3DE;color:#3B6D11;">—</span>
+      </div>
+      <div style="background:#1a1a2e;border-radius:var(--border-radius-lg);padding:1.5rem 1.25rem;text-align:center;margin-bottom:1rem;">
+        <div style="font-size:12px;color:#aaa;margin-bottom:8px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;" id="lbl-tte-monthly">Estimated Monthly Earnings</div>
+        <div id="tte-range" style="font-size:28px;font-weight:600;color:#fff;margin-bottom:6px;">—</div>
+        <div id="tte-avg" style="font-size:13px;color:#aaa;">—</div>
+      </div>
+      <div class="card">
+        <div class="section-title" id="lbl-tte-revenue">Revenue source breakdown</div>
+        <div class="tax-band"><div class="tax-dot" style="background:#D85A30"></div><span style="flex:1" id="lbl-tte-fund">Creator Fund / TTAP</span><span id="tte-fund" style="font-weight:500;color:var(--color-text-primary);"></span></div>
+        <div class="tax-band"><div class="tax-dot" style="background:#378ADD"></div><span style="flex:1" id="lbl-tte-brand">Brand deals (est.)</span><span id="tte-brand" style="font-weight:500;color:var(--color-text-primary);"></span></div>
+        <div class="tax-band"><div class="tax-dot" style="background:#8B5CF6"></div><span style="flex:1" id="lbl-tte-affiliate">Affiliate / other</span><span id="tte-affiliate" style="font-weight:500;color:var(--color-text-primary);"></span></div>
+      </div>
+      <div class="row">
+        <div class="card" style="margin-bottom:0"><div class="label" id="lbl-tte-vpm">Monthly videos</div><div class="value" id="tte-vpm">—</div></div>
+        <div class="card" style="margin-bottom:0"><div class="label" id="lbl-tte-mviews">Monthly views</div><div class="value" id="tte-mviews">—</div></div>
+        <div class="card" style="margin-bottom:0"><div class="label" id="lbl-tte-pervideo">Est. per video</div><div class="value net" id="tte-pervideo">—</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-top:10px;line-height:1.6;" id="lbl-tte-note">Estimates based on average Creator Fund rates. Actual earnings vary widely. Not financial advice.</div>
+      <button class="share-btn" id="share-ttearn" onclick="shareTab('ttearn')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+      <div class="dash-link-bar"><button class="dash-link-btn" onclick="goToDashboard()">📊 View Dashboard</button></div>
+    </div>
+
+    <!-- ═══ GIFT VALUES ═══ -->
+    <div class="panel" id="tab-gifts">
+      <h2 class="tab-heading" id="gifts-heading">TikTok Gift Value Chart</h2>
+      <p class="tab-subheading" id="gifts-sub">Search any gift by name or scroll the full chart.</p>
+      <input type="text" class="gift-search-box" id="gift-search" placeholder="🔍  Search gift name e.g. Universe, Lion, Rose..." oninput="filterGifts()"/>
+      <div id="gift-result-card" style="display:none;margin-bottom:12px;">
+        <div style="background:#1a1a2e;border-radius:var(--border-radius-lg);padding:1.25rem;text-align:center;">
+          <div style="font-size:36px;margin-bottom:4px;" id="gift-res-emoji">🎁</div>
+          <div style="font-size:18px;font-weight:600;color:#fff;margin-bottom:10px;" id="gift-res-name">—</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+            <div><div style="font-size:11px;color:#aaa;margin-bottom:2px;" id="gift-lbl-coins">Coins</div><div style="font-size:18px;font-weight:600;color:#fff;" id="gift-res-coins">—</div></div>
+            <div><div style="font-size:11px;color:#aaa;margin-bottom:2px;" id="gift-lbl-viewer">Viewer pays</div><div style="font-size:18px;font-weight:600;color:#F59E0B;" id="gift-res-viewer">—</div></div>
+            <div><div style="font-size:11px;color:#aaa;margin-bottom:2px;" id="gift-lbl-creator">You earn</div><div style="font-size:18px;font-weight:600;color:#4ADE80;" id="gift-res-creator">—</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="gift-table-wrap">
+        <table class="gift-table">
+          <thead><tr><th id="gift-th-gift">Gift</th><th id="gift-th-coins">Coins</th><th id="gift-th-viewer">Viewer pays</th><th id="gift-th-creator">Creator earns</th><th id="gift-th-tier">Tier</th></tr></thead>
+          <tbody id="gift-tbody"></tbody>
+        </table>
+      </div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-top:10px;line-height:1.6;" id="gifts-note">Viewer cost at standard rate of $0.015/coin. Creator payout = viewer spend × 50% (TikTok's cut) — Android/web rate. Universe shown at US price (44,999 coins). Verify current prices in-app.</div>
+      <div class="verified-note"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Gift values verified July 2026</span></div>
+      <button class="share-btn" id="share-gifts" onclick="shareTab('gifts')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+      <div class="dash-link-bar"><button class="dash-link-btn" onclick="goToDashboard()">📊 View Dashboard</button></div>
+    </div>
+
+    <!-- ═══ LIVE OPTIMIZER ═══ -->
+    <div class="panel" id="tab-optimizer">
+      <h2 class="tab-heading" id="optimizer-heading">LIVE Tips & Optimizer</h2>
+      <p class="tab-subheading" id="optimizer-sub">Best times to go LIVE, top hashtags for battles, and growth tips.</p>
+      <div class="section-title" id="lbl-opt-times" style="margin-bottom:8px;">⏰ Best Times to Go LIVE by Timezone</div>
+      <div class="time-grid">
+        <div class="time-card"><div class="time-tz">EST (New York)</div><div class="time-best">7:00 PM – 10:00 PM</div><div class="time-days">Fri & Sat evenings peak</div></div>
+        <div class="time-card"><div class="time-tz">CST (Chicago)</div><div class="time-best">6:00 PM – 9:00 PM</div><div class="time-days">Thu–Sat best days</div></div>
+        <div class="time-card"><div class="time-tz">MST (Denver)</div><div class="time-best">6:00 PM – 9:00 PM</div><div class="time-days">Fri & Sat evenings peak</div></div>
+        <div class="time-card"><div class="time-tz">PST (Los Angeles)</div><div class="time-best">7:00 PM – 10:00 PM</div><div class="time-days">Fri & Sat evenings peak</div></div>
+        <div class="time-card"><div class="time-tz">GMT (London)</div><div class="time-best">7:00 PM – 10:00 PM</div><div class="time-days">Fri & Sat evenings peak</div></div>
+        <div class="time-card"><div class="time-tz">CET (Paris / Berlin)</div><div class="time-best">8:00 PM – 11:00 PM</div><div class="time-days">Fri & Sat evenings peak</div></div>
+      </div>
+      <div class="section-title" id="lbl-opt-hashtags" style="margin-bottom:6px;">🏷️ Top Hashtags for Battle Creators</div>
+      <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px;" id="lbl-opt-tap">Tap any hashtag to copy it.</p>
+      <div class="hashtag-wrap" id="hashtag-list"></div>
+      <div class="card" style="margin-top:1rem;">
+        <div class="section-title" id="lbl-opt-tips">💡 Battle Growth Tips</div>
+        <div class="tip-row"><div class="tip-icon">🎯</div><div><strong>Pick active opponents.</strong> Battle creators with similar or slightly larger audiences — their viewers will cross over to your stream and gift.</div></div>
+        <div class="tip-row"><div class="tip-icon">📣</div><div><strong>Announce before you go LIVE.</strong> Post a video 1–2 hours before your battle so followers can plan to join and gift.</div></div>
+        <div class="tip-row"><div class="tip-icon">🔥</div><div><strong>Set a coin goal on screen.</strong> Viewers gift more when they can see a target and a countdown — it creates urgency.</div></div>
+        <div class="tip-row"><div class="tip-icon">🤝</div><div><strong>Co-host strategically.</strong> Partner with creators in adjacent niches to tap into their audience.</div></div>
+        <div class="tip-row"><div class="tip-icon">⏱️</div><div><strong>Battle in 10–15 minute rounds.</strong> Shorter rounds keep energy high. Multiple battles in one session earn more than one long battle.</div></div>
+        <div class="tip-row"><div class="tip-icon">📅</div><div><strong>Consistency beats virality.</strong> Creators who battle 4–5 days/week steadily out-earn those who go viral once. Build the habit.</div></div>
+      </div>
+      <button class="share-btn" id="share-optimizer" onclick="shareTab('optimizer')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+    </div>
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="panel" id="tab-dashboard">
+      <h2 class="tab-heading" id="dashboard-heading">Earnings Dashboard</h2>
+      <p class="tab-subheading" id="dashboard-sub">Visual breakdown of your battle performance from your battle log.</p>
+      <div id="dashboard-no-data" class="no-data-msg">
+        <div style="font-size:32px;margin-bottom:8px;">📊</div>
+        <div style="font-weight:500;color:var(--color-text-primary);margin-bottom:4px;" id="dash-nodata-title">No battle data yet</div>
+        <div id="dash-nodata-sub">Log your first battle to see your stats here.</div>
+        <button onclick="goToBattleLog()" style="margin-top:14px;padding:9px 20px;font-size:13px;font-weight:500;background:#D85A30;color:#fff;border:none;border-radius:20px;cursor:pointer;font-family:var(--font-sans);" id="dash-go-btn">⚔️ Go to Battle Log</button>
+      </div>
+      <div id="dashboard-content">
+        <div class="row" style="margin-bottom:1rem;">
+          <div class="card dash-stat" style="margin-bottom:0"><div class="label" id="dash-lbl-total">Total earned</div><div class="value net" id="dash-total">—</div></div>
+          <div class="card dash-stat" style="margin-bottom:0"><div class="label" id="dash-lbl-battles">Total battles</div><div class="value" id="dash-battles">—</div></div>
+          <div class="card dash-stat" style="margin-bottom:0"><div class="label" id="dash-lbl-avg">Avg per battle</div><div class="value coral" id="dash-avg">—</div></div>
+        </div>
+        <div class="chart-wrap"><div class="chart-title" id="dash-chart1-title">Earnings per Battle (last 10)</div><canvas id="chart-earnings" height="180"></canvas></div>
+        <div class="chart-wrap"><div class="chart-title" id="dash-chart2-title">Win / Loss Ratio</div><canvas id="chart-winloss" height="180"></canvas></div>
+        <div class="chart-wrap"><div class="chart-title" id="dash-chart3-title">Earnings by Day of Week</div><canvas id="chart-dayofweek" height="180"></canvas></div>
+      </div>
+      <button class="share-btn" id="share-dashboard" onclick="shareTab('dashboard')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+    </div>
+
+    <!-- ═══ FAQ ═══ -->
+    <div class="panel" id="tab-faq">
+      <h2 class="tab-heading" id="faq-heading">TikTok Earnings — Frequently Asked Questions</h2>
+      <p class="tab-subheading" id="faq-sub">Everything you need to know to start earning on TikTok, taxes, creator income and more.</p>
+      <div class="faq-category" id="faq-cat1">💰 Coins &amp; Value</div>
+      
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Are all TikTok accounts eligible for monetization?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <strong>No — TikTok has specific eligibility requirements</strong> for each monetization method. Here's what you need for each one:
+          <table>
+            <tr><th>Monetization method</th><th>Requirements</th></tr>
+            <tr><td>Creator Fund (legacy)</td><td>18+, 10K followers, 100K views in last 30 days, US/UK/EU/AU</td></tr>
+            <tr><td>Creativity Program</td><td>18+, 10K followers, 100K views in last 30 days, eligible country</td></tr>
+            <tr><td>LIVE Gifts &amp; Battles</td><td>18+, 1,000 followers minimum, account in good standing</td></tr>
+            <tr><td>TikTok Shop / Affiliate</td><td>18+, 5,000 followers (varies by region)</td></tr>
+            <tr><td>Brand deals</td><td>No official minimum — brands set their own requirements</td></tr>
+          </table>
+          <strong>Common reasons accounts are disqualified:</strong><br><br>
+          — Account is under 18 years old<br>
+          — Located in a country where monetization isn't available<br>
+          — Community Guidelines violations or account strikes<br>
+          — Follower count below the threshold for the specific program<br>
+          — Account is set to private<br><br>
+          Even if you don't qualify for the Creator Fund yet, you can still earn through <strong>LIVE gifts and brand deals</strong> at much lower follower counts.
+        </div>
+      </div>
+      
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q1">How much is 1 TikTok coin worth in USD?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><strong>1 TikTok coin costs viewers approximately $0.015 USD</strong> to purchase. As a creator you receive roughly <strong>$0.0075 per coin</strong> after TikTok's 50% cut. So 1,000 coins gifted = approximately <strong>$7.50</strong> in your wallet on Android.<table><tr><th>Coins</th><th>Viewer pays</th><th>Creator earns (Android)</th></tr><tr><td>100</td><td>~$1.50</td><td>~$0.75</td></tr><tr><td>1,000</td><td>~$15</td><td>~$7.50</td></tr><tr><td>10,000</td><td>~$150</td><td>~$75</td></tr><tr><td>29,999 (Lion)</td><td>~$450</td><td>~$225</td></tr></table></div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q2">How do TikTok coins turn into real money for creators?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><strong>Step 1 — Viewers buy coins</strong> with real money from their app store.<br><br><strong>Step 2 — TikTok takes 50%:</strong> When viewers send gifts, TikTok keeps their 50% platform fee. The remaining 50% appears as Diamonds in your creator wallet.<br><br><strong>Step 3 — Diamonds become cash:</strong> Withdraw via PayPal or bank transfer. Minimum withdrawal is $100.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q3">What percentage does TikTok take from gifts and battles?</span><span class="faq-chevron">▼</span></button><div class="faq-answer">TikTok keeps <strong>approximately 50%</strong> of all gift revenue. On iOS, Apple takes an additional <strong>30%</strong> first.<table><tr><th>Party</th><th>Cut</th><th>Per $10 viewer spend</th></tr><tr><td>Apple (iOS only)</td><td>30%</td><td>$3.00</td></tr><tr><td>TikTok</td><td>50% of remainder</td><td>$3.50</td></tr><tr><td><strong>You (iOS)</strong></td><td><strong>~35%</strong></td><td><strong>~$3.50</strong></td></tr><tr><td><strong>You (Android)</strong></td><td><strong>~50%</strong></td><td><strong>~$5.00</strong></td></tr></table></div></div>
+      <div class="faq-category" id="faq-cat2">⚔️ TikTok Battles</div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q4">How much do TikTok battles pay?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><table><tr><th>Creator size</th><th>Avg coins/battle</th><th>Est. payout</th></tr><tr><td>Small (&lt;10K)</td><td>1,600–6,667</td><td>$12–$50</td></tr><tr><td>Mid-tier (10K–100K)</td><td>6,667–33,333</td><td>$50–$250</td></tr><tr><td>Large (100K–500K)</td><td>33,333–166,667</td><td>$250–$1,250</td></tr><tr><td>Top (500K+)</td><td>166,667+</td><td>$1,250+</td></tr></table>Estimates after TikTok's 50% cut using Android/web rates.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q5">Does the winner of a TikTok battle earn more?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><strong>Both creators earn from their own side's gifts only.</strong> Winning does not directly change your payout. However, winning boosts visibility and motivates audiences to gift more aggressively.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q6">What is a co-host battle split and how does it work?</span><span class="faq-chevron">▼</span></button><div class="faq-answer">In a co-hosted battle, two creators team up. Coins are split based on a pre-agreed arrangement: <strong>50/50</strong> for equal audiences, <strong>60/40</strong> or <strong>70/30</strong> when one creator drives more traffic. Always agree before the battle starts.</div></div>
+      <div class="faq-category" id="faq-cat3">📈 Creator Fund &amp; Regular Earnings</div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q7">How much does the TikTok Creator Fund pay per 1,000 views?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><table><tr><th>Program</th><th>Rate per 1K views</th><th>Min. length</th></tr><tr><td>Creator Fund (legacy)</td><td>$0.02–$0.04</td><td>Any</td></tr><tr><td>Creativity Program</td><td>$0.40–$1.00+</td><td>1 minute</td></tr></table>The Creativity Program pays up to <strong>25× more</strong> than the legacy fund.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q8">How much can a creator with 100,000 followers make per month?</span><span class="faq-chevron">▼</span></button><div class="faq-answer">A mid-tier creator posting 5 videos/week can earn between <strong>$500 and $3,000/month</strong>:<table><tr><th>Source</th><th>Est. monthly</th></tr><tr><td>Creator Fund / Creativity Program</td><td>$50–$300</td></tr><tr><td>Brand deals (1–2/month)</td><td>$300–$1,500</td></tr><tr><td>LIVE gifts &amp; battles</td><td>$200–$1,000+</td></tr><tr><td>Affiliate commissions</td><td>$50–$300</td></tr></table></div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q9">What content niches earn the most on TikTok?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><table><tr><th>Niche</th><th>Relative CPM</th></tr><tr><td>Finance / Business</td><td>⭐⭐⭐⭐⭐ Highest</td></tr><tr><td>Tech / Software</td><td>⭐⭐⭐⭐⭐ Very high</td></tr><tr><td>Education</td><td>⭐⭐⭐⭐ High</td></tr><tr><td>Beauty / Fashion</td><td>⭐⭐⭐⭐ High</td></tr><tr><td>Fitness / Health</td><td>⭐⭐⭐ Medium</td></tr><tr><td>Gaming</td><td>⭐⭐ Lower</td></tr><tr><td>Comedy / Entertainment</td><td>⭐⭐ Lower</td></tr></table></div></div>
+      <div class="faq-category" id="faq-cat4">🧾 Taxes for TikTok Creators</div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q10">Do TikTok creators have to pay taxes on their earnings?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><strong>Yes.</strong> All TikTok income is taxable. The IRS considers you <strong>self-employed</strong>:<br><br>— Pay <strong>self-employment tax (15.3%)</strong> on net earnings<br>— Pay <strong>federal income tax</strong> based on your bracket<br>— Make <strong>quarterly estimated payments</strong> — TikTok does not withhold taxes<br><br>Rule of thumb: set aside <strong>25–35%</strong> of every payout.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q11">Does TikTok send a 1099 tax form to creators?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><strong>Yes, if you earn over $600 in a calendar year.</strong> TikTok sends a <strong>1099-NEC</strong> by January 31st. Even under $600, you must still report all self-employment income.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q12">What business expenses can TikTok creators deduct from taxes?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><table><tr><th>Expense</th><th>Deductible?</th></tr><tr><td>Camera, ring light, microphone, tripod</td><td>✅ Yes</td></tr><tr><td>Computer, phone (business use %)</td><td>✅ Partial</td></tr><tr><td>Internet bill (business use %)</td><td>✅ Partial</td></tr><tr><td>Home office (dedicated space)</td><td>✅ Yes</td></tr><tr><td>Props, costumes, backgrounds</td><td>✅ Yes</td></tr><tr><td>Editing software subscriptions</td><td>✅ Yes</td></tr><tr><td>Personal clothing (non-costume)</td><td>❌ No</td></tr><tr><td>Personal meals</td><td>❌ No</td></tr></table></div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q13">When do TikTok creators need to pay quarterly estimated taxes?</span><span class="faq-chevron">▼</span></button><div class="faq-answer">If you expect to owe <strong>$1,000 or more</strong>, the IRS requires quarterly payments.<table><tr><th>Quarter</th><th>Period</th><th>Due date</th></tr><tr><td>Q1</td><td>Jan–Mar</td><td>April 15</td></tr><tr><td>Q2</td><td>Apr–May</td><td>June 16</td></tr><tr><td>Q3</td><td>Jun–Aug</td><td>Sept 15</td></tr><tr><td>Q4</td><td>Sep–Dec</td><td>Jan 15 (next year)</td></tr></table>Pay via <strong>irs.gov/payments</strong>.</div></div>
+      <div class="faq-category" id="faq-cat5">💳 Payouts &amp; Platform</div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q14">What is the minimum withdrawal amount on TikTok LIVE?</span><span class="faq-chevron">▼</span></button><div class="faq-answer">The minimum withdrawal is <strong>$100 USD</strong>, via PayPal (3–5 business days) or bank transfer (5–10 business days). Make sure your account is fully verified to avoid delays.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q15">How do iOS vs Android purchases affect creator earnings?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><table><tr><th></th><th>iOS</th><th>Android / Web</th></tr><tr><td>Viewer spends</td><td>$10.00</td><td>$10.00</td></tr><tr><td>Apple takes</td><td>$3.00</td><td>$0.00</td></tr><tr><td>TikTok's 50% cut</td><td>$3.50</td><td>$5.00</td></tr><tr><td><strong>Creator receives</strong></td><td><strong>~$3.50</strong></td><td><strong>~$5.00</strong></td></tr></table></div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span id="faq-q16">Are all TikTok accounts eligible for monetization?</span><span class="faq-chevron">▼</span></button><div class="faq-answer"><strong>No — TikTok has specific eligibility requirements:</strong><table><tr><th>Method</th><th>Requirements</th></tr><tr><td>Creator Fund (legacy)</td><td>18+, 10K followers, 100K views/30 days, eligible country</td></tr><tr><td>Creativity Program</td><td>18+, 10K followers, 100K views/30 days, eligible country</td></tr><tr><td>LIVE Gifts &amp; Battles</td><td>18+, 1,000 followers, account in good standing</td></tr><tr><td>TikTok Shop / Affiliate</td><td>18+, 5,000 followers (varies by region)</td></tr><tr><td>Brand deals</td><td>No official minimum — brands set their own</td></tr></table></div></div>
+      <button class="share-btn" id="share-faq" onclick="shareTab('faq')"><span class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></span><span class="share-label">Share</span></button>
+    </div>
+
+  </div><!-- .hub -->
+
+  <div class="footer" id="site-footer">Tiktonomics · For entertainment and planning purposes only · Not financial or tax advice</div>
+
+</div><!-- .page-wrap -->
+
+<script>
+// ── Constants ──
+const COIN_RATE = 0.015;
+const APPLE_CUT = 0.30;
+const TIKTOK_CUT = 0.50;
+const WEEKS_PER_MONTH = 4.3;
+const VIEWER_COST_PER_COIN = 0.015;
+
+// ── Bigo Live constants (verified 2026 rates) ──
+// Creator payout is well-corroborated across independent sources: gifts convert
+// to Beans at 0.5 Beans per Diamond, cashed out at a fixed 210 Beans = $1 USD.
+// That gives a solid, consistent creator rate of $0.002381 per Diamond gifted.
+//
+// What we deliberately do NOT show as a single number: "% of viewer spend."
+// Unlike TikTok's clean iOS/Android split, Diamond purchase price varies 2-3x
+// by bundle size and region ($0.012-0.031/Diamond+), so any single "platform
+// cut %" would be misleading. We show the creator payout only, plus a range
+// for context.
+const BIGO_CREATOR_RATE = 0.002381; // USD creator earns per Diamond received
+const BIGO_VIEWER_COST_LOW = 0.012; // typical bulk/regional low
+const BIGO_VIEWER_COST_HIGH = 0.031; // smallest in-app bundle
+const BIGO_MIN_WITHDRAW = 31.90;    // USD — 6,700 Beans
+const BIGO_WEEKLY_CAP = 5000;       // USD — 1,050,000 Beans per 7-day period
+
+// ── State ──
+let sitePlatform='tiktok'; // 'tiktok' | 'bigo' — active on Calculator tab
+let platform='ios', spPlatform='ios', goalPlatform='ios', logResult='win';
+let currentLang='en';
+let battles=[], cohosts=[];
+try{battles=JSON.parse(localStorage.getItem('tiktok_battles')||'[]');}catch(e){}
+let earningsChart=null, winlossChart=null, dowChart=null;
+const langCache={}; // Never pre-cache 'en' — always fetch full en.json
+
+// Minimal English fallback — D starts here, upgraded async once en.json loads
+let D={
+  grossLabel:"Gross coin value", appleLabel:"Apple store cut (30%)",
+  ttLabel:"TikTok's 50% cut", youLabel:"You receive",
+  logWin:"Win", logLoss:"Loss", logRecent:"Recent battles",
+  ttearnAvgLabel:"Average: ", goalPctSuffix:"% of daily target",
+  giftNoResults:"No gifts found.",
+  tierSmall:"Small", tierMid:"Mid", tierLarge:"Large", tierWhale:"🐋 Whale",
+  shareBtn:"Share", shareCopied:"✓ Copied!",
+  dashViewBtn:"📊 View Dashboard", dashGoBtn:"⚔️ Go to Battle Log"
+};
+
+function saveBattles(){try{localStorage.setItem('tiktok_battles',JSON.stringify(battles));}catch(e){}}
+function coinsToNet(coins,plat){
+  const rawUSD=coins*COIN_RATE;
+  const afterStore=plat==='ios'?rawUSD*(1-APPLE_CUT):rawUSD;
+  return{rawUSD,afterTT:afterStore*(1-TIKTOK_CUT)};
+}
+function fmt(n){return'$'+n.toFixed(2);}
+function set(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+function sanitize(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ── Language System ──
+async function loadLang(code){
+  if(langCache[code]) return langCache[code];
+  try{
+    const res=await fetch('/lang/'+code+'.json');
+    if(!res.ok) throw new Error('404');
+    const data=await res.json();
+    langCache[code]=data;
+    return data;
+  }catch(e){
+    // fallback: return cached EN if available
+    return langCache['en']||{};
+  }
+}
+
+async function selectLang(code){
+  // Always clear EN from cache so we fetch full en.json, not the minimal inline fallback
+  if(code==='en') delete langCache['en'];
+  const data=await loadLang(code);
+  if(!data||!data.langLabel) return;
+  currentLang=code; D=data;
+  document.documentElement.lang=code;
+  localStorage.setItem('tiktok_lang',code);
+  set('lang-label',data.langLabel);
+  document.querySelectorAll('.lang-option').forEach(o=>o.classList.toggle('active',o.id==='lang-opt-'+code));
+  document.getElementById('lang-dropdown').classList.remove('open');
+  applyLang(data);
+  calcEarnings(); renderLog(); calcTTEarn(); fetchCohosts();
+  renderGiftTable(document.getElementById('gift-search').value||'');
+}
+
+function applyLang(d){
+  const s=(id,k)=>set(id,d[k]||'');
+  s('site-title','siteTitle');s('site-sub','siteSub');
+  s('nav-dashboard','navDashboard');s('nav-ttearn','navTtearn');s('nav-calc','navCalc');
+  s('nav-split','navSplit');s('nav-log','navLog');s('nav-gifts','navGifts');
+  s('nav-scanner','navScanner');s('nav-goal','navGoal');s('nav-tax','navTax');
+  s('nav-optimizer','navOptimizer');s('nav-faq','navFaq');
+  s('calc-heading','calcH');s('calc-sub','calcS');
+  s('calc-scenarios-label','scenariosLabel');s('sc-small','scSmall');s('sc-mid','scMid');s('sc-top','scTop');
+  s('lbl-coins','lblCoins');s('lbl-battles','lblBattles');s('lbl-platform','lblPlatform');
+  s('plat-ios','platIos');s('plat-and','platAnd');s('lbl-breakdown-title','breakdownTitle');
+  s('lbl-per-battle','lblPerBattle');s('lbl-per-week','lblPerWeek');s('lbl-per-month','lblPerMonth');
+  // Share buttons
+  ['calc','scanner','split','log','goal','tax','ttearn','gifts','optimizer','dashboard','faq'].forEach(t=>{
+    const btn=document.getElementById('share-'+t);
+    if(btn) btn.innerHTML=shareBtnHTML(d.shareBtn||'Share');
+  });
+  s('scanner-heading','scanH');s('scanner-sub','scanS');
+  s('scan-upload-title','scanUploadTitle');s('scan-upload-sub','scanUploadSub');s('scan-manual-title','scanManualTitle');
+  s('lbl-scan-your','lblScanYour');s('lbl-scan-opp','lblScanOpp');
+  s('lbl-you-earned','lblYouEarned');s('lbl-opp-earned','lblOppEarned');
+  s('lbl-scan-winner','lblScanWinner');s('lbl-scan-diff','lblScanDiff');s('lbl-scan-total','lblScanTotal');
+  s('split-heading','splitH');s('split-sub','splitS');s('lbl-split-calc-title','lblSplitCalcTitle');
+  s('lbl-sp-coins','lblSpCoins');s('lbl-sp-platform','lblSpPlatform');s('lbl-split-breakdown','splitBreakdown');
+  s('lbl-sp-you-label','lblSpYouLabel');s('lbl-sp-cohost-label','lblSpCohostLabel');
+  s('lbl-sp-you','lblSpYou');s('lbl-sp-cohost','lblSpCohost');s('lbl-sp-fees','lblSpFees');
+  s('lbl-cohost-add-title','lblCohostAddTitle');s('lbl-ch-handle','lblChHandle');s('lbl-ch-followers','lblChFollowers');
+  s('lbl-ch-niche','lblChNiche');s('lbl-ch-tz','lblChTz');s('lbl-ch-avail','lblChAvail');s('lbl-ch-add','lblChAdd');
+  s('lbl-cohost-dir-title','lblCohostDirTitle');s('cohost-shared-label',d.cohostShared||'');
+  s('log-heading','logH');s('log-sub','logS');s('lbl-log-title','logTitle');
+  s('lbl-log-coins','logCoins');s('lbl-log-opp','logOpp');s('log-win','logWin');s('log-loss','logLoss');
+  s('lbl-log-add','logAdd');s('lbl-log-total','logTotal');s('lbl-log-winrate','logWinrate');
+  s('lbl-log-best','logBest');s('lbl-log-clear','logClear');s('log-empty','logEmpty');s('lbl-lb-title','lblLbTitle');
+  s('goal-heading','goalH');s('goal-sub','goalS');s('lbl-goal-target','lblGoalTarget');
+  s('lbl-goal-avg','lblGoalAvg');s('lbl-goal-platform','lblGoalPlatform');s('lbl-goal-needs','lblGoalNeeds');
+  s('lbl-goal-battles','lblGoalBattles');s('lbl-goal-coins','lblGoalCoins');
+  s('lbl-goal-daily','lblGoalDaily');s('lbl-goal-progress','lblGoalProgress');
+  s('tax-heading','taxH');s('tax-sub','taxS');s('lbl-tax-monthly','lblTaxMonthly');s('lbl-tax-filing','lblTaxFiling');
+  const tf=document.getElementById('tax-filing');
+  if(tf) tf.innerHTML=`<option value="single">${d.taxSingle||'Single'}</option><option value="married">${d.taxMarried||'Married filing jointly'}</option><option value="married_sep">${d.taxMarriedSep||'Married filing separately'}</option><option value="head">${d.taxHead||'Head of household'}</option><option value="surviving">${d.taxSurviving||'Qualifying surviving spouse'}</option>`;
+  s('lbl-tax-annual','lblTaxAnnual');s('lbl-tax-setaside','lblTaxSetaside');s('lbl-tax-rate','lblTaxRate');
+  s('lbl-tax-breakdown','lblTaxBreakdown');s('lbl-tax-se','lblTaxSe');s('lbl-tax-fed','lblTaxFed');
+  s('lbl-tax-deduct','lblTaxDeduct');s('lbl-tax-note','lblTaxNote');
+  s('ttearn-heading','ttearnH');s('ttearn-sub','ttearnS');s('lbl-tte-followers','lblTteFollowers');
+  s('lbl-tte-views','lblTteViews');s('lbl-tte-vpw','lblTteVpw');s('lbl-tte-eng','lblTteEng');
+  s('lbl-tte-niche','lblTteNiche');s('lbl-tte-monthly','lblTteMonthly');s('lbl-tte-revenue','lblTteRevenue');
+  s('lbl-tte-fund','lblTteFund');s('lbl-tte-brand','lblTteBrand');s('lbl-tte-affiliate','lblTteAffiliate');
+  s('lbl-tte-vpm','lblTteVpm');s('lbl-tte-mviews','lblTteMviews');s('lbl-tte-pervideo','lblTtePervideo');
+  s('lbl-tte-note','lblTteNote');
+  s('gifts-heading','giftsH');s('gifts-sub','giftsS');s('gifts-note','giftsNote');
+  const gs=document.getElementById('gift-search');
+  if(gs) gs.placeholder=d.giftSearchPlaceholder||'🔍 Search...';
+  s('gift-th-gift','giftThGift');s('gift-th-coins','giftThCoins');s('gift-th-viewer','giftThViewer');
+  s('gift-th-creator','giftThCreator');s('gift-th-tier','giftThTier');
+  s('gift-lbl-coins','giftLblCoins');s('gift-lbl-viewer','giftLblViewer');s('gift-lbl-creator','giftLblCreator');
+  s('optimizer-heading','optimizerH');s('optimizer-sub','optimizerS');
+  s('lbl-opt-times','lblOptTimes');s('lbl-opt-hashtags','lblOptHashtags');
+  s('lbl-opt-tap','lblOptTap');s('lbl-opt-tips','lblOptTips');
+  s('dashboard-heading','dashH');s('dashboard-sub','dashS');
+  s('dash-lbl-total','dashLblTotal');s('dash-lbl-battles','dashLblBattles');s('dash-lbl-avg','dashLblAvg');
+  s('dash-chart1-title','dashChart1');s('dash-chart2-title','dashChart2');s('dash-chart3-title','dashChart3');
+  s('dash-nodata-title','dashNodataTitle');s('dash-nodata-sub','dashNodataSub');
+  s('dash-go-btn','dashGoBtn');
+  s('faq-heading','faqH');s('faq-sub','faqS');
+  s('faq-cat1','faqCat1');s('faq-cat2','faqCat2');s('faq-cat3','faqCat3');s('faq-cat4','faqCat4');s('faq-cat5','faqCat5');
+  if(d.faqQ) d.faqQ.forEach((q,i)=>set('faq-q'+(i+1),q));
+  s('site-footer','footer');
+  // Dashboard view buttons
+  document.querySelectorAll('.dash-link-btn').forEach(b=>b.textContent=d.dashViewBtn||'📊 View Dashboard');
+  calcGoal(); // re-render goal pct label
+  // If Bigo mode is active, re-apply its English overrides (Bigo strings aren't in lang JSON yet)
+  if(sitePlatform==='bigo'){
+    set('lbl-coins','Diamonds received per battle');
+    set('calc-heading','Bigo Live PK Battle Earnings Calculator');
+    set('calc-sub','Convert Bigo Diamonds to USD — see exactly what you take home after Bigo\'s cut.');
+  }
+}
+
+// ── Lang Dropdown ──
+function toggleLangDropdown(e){
+  e.stopPropagation();
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+document.addEventListener('click',()=>{
+  const ld=document.getElementById('lang-dropdown');
+  if(ld) ld.classList.remove('open');
+  const md=document.getElementById('more-dropdown');
+  if(md) md.classList.remove('open');
+});
+
+// ── Nav ──
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav button,.more-dropdown button').forEach(b=>b.classList.remove('active'));
+  const panel=document.getElementById('tab-'+id);
+  if(panel) panel.classList.add('active');
+  btn.classList.add('active');
+  const mb=document.getElementById('more-btn');
+  if(mb) mb.classList.remove('has-active');
+  document.getElementById('more-dropdown').classList.remove('open');
+  if(id==='dashboard') setTimeout(initDashboard,50);
+  if(id==='gifts') renderGiftTable('');
+}
+function switchTabMore(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav button,.more-dropdown button').forEach(b=>b.classList.remove('active'));
+  const panel=document.getElementById('tab-'+id);
+  if(panel) panel.classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('more-btn').classList.add('has-active');
+  document.getElementById('more-dropdown').classList.remove('open');
+  if(id==='dashboard') setTimeout(initDashboard,50);
+  if(id==='gifts') renderGiftTable('');
+}
+function toggleMore(e){e.stopPropagation();document.getElementById('more-dropdown').classList.toggle('open');}
+
+// ── Share ──
+// SVG icons instead of emoji — emoji glyphs render as broken boxes on some
+// Android OEM fonts/WebViews. SVG is vector-based and renders identically
+// everywhere, which matters most right at the moment someone wants to share.
+const ICON_SHARE = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>';
+const ICON_CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M20 6L9 17l-5-5"/></svg>';
+function shareBtnHTML(label){ return `<span class="share-icon">${ICON_SHARE}</span><span class="share-label">${label}</span>`; }
+function shareBtnCopiedHTML(label){ return `<span class="share-icon">${ICON_CHECK}</span><span class="share-label">${label}</span>`; }
+
+const SHARE_TEXT = 'Free TikTok & Bigo Live earnings calculator — coins/diamonds to USD, gift values, co-host splits, tax estimator and more ⚔️ tiktonomics.com';
+function shareTab(tab){
+  const btn = document.getElementById('share-'+tab);
+  const markCopied = () => {
+    if(!btn) return;
+    btn.innerHTML = shareBtnCopiedHTML(D.shareCopied||'Copied!');
+    btn.classList.add('copied');
+    setTimeout(()=>{ btn.innerHTML=shareBtnHTML(D.shareBtn||'Share'); btn.classList.remove('copied'); }, 2500);
+  };
+  if(navigator.share){
+    navigator.share({title:'Tiktonomics', text:SHARE_TEXT, url:'https://tiktonomics.com'}).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(SHARE_TEXT).then(markCopied).catch(()=>{ if(btn) btn.textContent=SHARE_TEXT; });
+  }
+}
+
+// ── Calculator ──
+function setPlatform(p){platform=p;document.getElementById('plat-ios').classList.toggle('active',p==='ios');document.getElementById('plat-and').classList.toggle('active',p==='android');calcEarnings();}
+function setScenario(c){document.getElementById('coins').value=c;calcEarnings();}
+
+function setSitePlatform(p){
+  sitePlatform=p;
+  document.getElementById('site-plat-tiktok').classList.toggle('active',p==='tiktok');
+  document.getElementById('site-plat-bigo').classList.toggle('active',p==='bigo');
+  document.getElementById('site-plat-bigo').classList.toggle('bigo-active',p==='bigo');
+  document.getElementById('platform-toggle-wrap').style.display = p==='bigo' ? 'none' : 'block';
+  document.getElementById('bigo-note').style.display = p==='bigo' ? 'block' : 'none';
+  const coinsLbl=document.getElementById('lbl-coins');
+  const headingEl=document.getElementById('calc-heading');
+  const subEl=document.getElementById('calc-sub');
+  if(p==='bigo'){
+    coinsLbl.textContent='Diamonds received per battle';
+    headingEl.textContent='Bigo Live PK Battle Earnings Calculator';
+    subEl.textContent='Convert Bigo Diamonds to USD — see exactly what you take home after Bigo\'s cut.';
+  }else{
+    coinsLbl.textContent=D.lblCoins||'Coins received per battle';
+    headingEl.textContent=D.calcH||'TikTok Battle Earnings Calculator';
+    subEl.textContent=D.calcS||'Convert TikTok coins to USD — see exactly what you take home after platform fees.';
+  }
+  calcEarnings();
+}
+
+function calcEarnings(){
+  const coins=parseFloat(document.getElementById('coins').value)||0;
+  const bpw=parseFloat(document.getElementById('battles').value)||1;
+
+  if(sitePlatform==='bigo'){
+    const creatorUSD=coins*BIGO_CREATOR_RATE;
+    const viewerLow=coins*BIGO_VIEWER_COST_LOW;
+    const viewerHigh=coins*BIGO_VIEWER_COST_HIGH;
+    document.getElementById('breakdown').innerHTML=
+      `<div class="breakdown-row"><span>Viewer spend (varies by bundle/region)</span><span>${fmt(viewerLow)} – ${fmt(viewerHigh)}</span></div>`+
+      `<div class="breakdown-row"><span><strong>You receive (Diamonds → Beans → USD)</strong></span><span class="net">${fmt(creatorUSD)}</span></div>`;
+    set('r-battle',fmt(creatorUSD));set('r-week',fmt(creatorUSD*bpw));set('r-month',fmt(creatorUSD*bpw*WEEKS_PER_MONTH));
+    return;
+  }
+
+  const{rawUSD,afterTT}=coinsToNet(coins,platform);
+  const storeCut=platform==='ios'?rawUSD*APPLE_CUT:0;
+  const ttCut=(platform==='ios'?rawUSD*(1-APPLE_CUT):rawUSD)*TIKTOK_CUT;
+  const gl=D.grossLabel||'Gross coin value';
+  const al=D.appleLabel||'Apple store cut (30%)';
+  const tl=D.ttLabel||"TikTok's 50% cut";
+  const yl=D.youLabel||'You receive';
+  document.getElementById('breakdown').innerHTML=
+    `<div class="breakdown-row"><span>${gl}</span><span>${fmt(rawUSD)}</span></div>`+
+    (platform==='ios'?`<div class="breakdown-row"><span>${al}</span><span class="cut">− ${fmt(storeCut)}</span></div>`:'')+
+    `<div class="breakdown-row"><span>${tl}</span><span class="cut">− ${fmt(ttCut)}</span></div>`+
+    `<div class="breakdown-row"><span><strong>${yl}</strong></span><span class="net">${fmt(afterTT)}</span></div>`;
+  set('r-battle',fmt(afterTT));set('r-week',fmt(afterTT*bpw));set('r-month',fmt(afterTT*bpw*WEEKS_PER_MONTH));
+}
+
+// ── Scanner ──
+function calcScan(){
+  const your=parseFloat(document.getElementById('scan-your').value)||0;
+  const opp=parseFloat(document.getElementById('scan-opp').value)||0;
+  if(!your&&!opp){document.getElementById('scan-result').style.display='none';return;}
+  set('scan-you-earn',fmt(coinsToNet(your,'android').afterTT));
+  set('scan-opp-earn',fmt(coinsToNet(opp,'android').afterTT));
+  set('scan-winner',your>opp?'You 🏆':opp>your?'Opponent 🏆':'Tie');
+  set('scan-diff',Math.abs(your-opp).toLocaleString()+' coins');
+  set('scan-total',(your+opp).toLocaleString()+' coins');
+  document.getElementById('scan-result').style.display='block';
+}
+function handleScan(e){if(e.target.files&&e.target.files[0])document.getElementById('scan-ai-note').style.display='block';}
+
+// ── Co-host Split ──
+function setSpPlatform(p){spPlatform=p;document.getElementById('sp-ios').classList.toggle('active',p==='ios');document.getElementById('sp-and').classList.toggle('active',p==='android');calcSplit();}
+function calcSplit(){
+  const coins=parseFloat(document.getElementById('sp-coins').value)||0;
+  const pct=parseFloat(document.getElementById('sp-pct').value)||60;
+  set('sp-pct-label',pct);
+  document.getElementById('sp-bar-a').style.width=pct+'%';
+  document.getElementById('sp-bar-b').style.width=(100-pct)+'%';
+  const{rawUSD,afterTT}=coinsToNet(coins,spPlatform);
+  set('sp-you',fmt(afterTT*(pct/100)));set('sp-cohost',fmt(afterTT*((100-pct)/100)));set('sp-fees',fmt(rawUSD-afterTT));
+}
+
+// ── Co-host Finder (live API) ──
+async function addCohost(){
+  const handle=document.getElementById('ch-handle').value.trim();
+  if(!handle){showCohostMsg('Please enter your @handle.','error');return;}
+  const btn=document.getElementById('lbl-ch-add');
+  const orig=btn.textContent; btn.textContent='Adding...'; btn.disabled=true;
+  const payload={handle:handle.startsWith('@')?handle:'@'+handle,followers:parseInt(document.getElementById('ch-followers').value)||0,niche:document.getElementById('ch-niche').value,timezone:document.getElementById('ch-tz').value,availability:document.getElementById('ch-avail').value||'Open'};
+  try{
+    const res=await fetch('https://tiktonomics.com/api/cohosts.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||'Server error');
+    document.getElementById('ch-handle').value='';document.getElementById('ch-followers').value='';document.getElementById('ch-avail').value='';
+    showCohostMsg('✓ Added to the shared directory!','success');fetchCohosts();
+  }catch(e){showCohostMsg('Error: '+e.message,'error');}
+  finally{btn.textContent=orig;btn.disabled=false;}
+}
+async function fetchCohosts(){
+  try{const res=await fetch('https://tiktonomics.com/api/cohosts.php');const data=await res.json();cohosts=data.cohosts||[];renderCohosts();}
+  catch(e){renderCohosts();}
+}
+function showCohostMsg(msg,type){
+  let el=document.getElementById('cohost-msg');
+  if(!el){el=document.createElement('div');el.id='cohost-msg';el.style.cssText='font-size:12px;padding:8px 12px;border-radius:8px;margin-top:8px;';document.getElementById('lbl-ch-add').parentNode.appendChild(el);}
+  el.textContent=msg;el.style.background=type==='success'?'#EAF3DE':'#FCEBEB';el.style.color=type==='success'?'#3B6D11':'#A32D2D';
+  setTimeout(()=>{el.textContent='';el.style.background='transparent';},4000);
+}
+function renderCohosts(){
+  const list=document.getElementById('cohost-list');
+  const empty=document.getElementById('cohost-empty');
+  if(!cohosts.length){empty.style.display='block';list.innerHTML='';return;}
+  empty.style.display='none';
+  list.innerHTML=cohosts.slice(0,50).map(c=>`<div class="cohost-card"><div><div class="cohost-handle">${sanitize(c.handle)}</div><div class="cohost-meta">${c.followers>0?sanitize(String(Number(c.followers).toLocaleString()))+' followers · ':''}${sanitize(c.niche)} · ${sanitize(c.timezone||c.tz||'')}</div></div><div class="cohost-avail">${sanitize(c.availability||c.avail||'Open')}</div></div>`).join('');
+}
+
+// ── Battle Log ──
+function setResult(r){logResult=r;document.getElementById('log-win').classList.toggle('active',r==='win');document.getElementById('log-loss').classList.toggle('active',r==='loss');}
+function addLog(){
+  const coins=parseFloat(document.getElementById('log-coins').value)||0;
+  if(!coins) return;
+  battles.push({coins,opp:document.getElementById('log-opp').value||'Unknown',result:logResult,earned:coinsToNet(coins,'android').afterTT,date:new Date().toLocaleDateString(),ts:Date.now()});
+  document.getElementById('log-coins').value='';document.getElementById('log-opp').value='';
+  saveBattles();renderLog();
+}
+function clearLog(){if(confirm('Clear all battle logs?')){battles=[];saveBattles();renderLog();}}
+function exportBattleLogCSV(){
+  if(!battles.length) return;
+  const esc=v=>{ const s=String(v??''); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; };
+  const header=['Date','Opponent','Coins','Result','Earned (USD)'].join(',');
+  const rows=battles.map(b=>[esc(b.date),esc(b.opp),b.coins,b.result,b.earned.toFixed(2)].join(','));
+  const csv=[header,...rows].join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='tiktonomics-battle-log-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function renderLog(){
+  const list=document.getElementById('log-list');
+  const empty=document.getElementById('log-empty');
+  const stats=document.getElementById('log-stats');
+  const lb=document.getElementById('lb-section');
+  const la=document.getElementById('log-actions');
+  if(!battles.length){empty.style.display='block';stats.style.display='none';lb.style.display='none';if(la)la.style.display='none';list.innerHTML='';return;}
+  empty.style.display='none';stats.style.display='block';lb.style.display='block';if(la)la.style.display='flex';
+  const total=battles.reduce((s,b)=>s+b.earned,0);
+  const wins=battles.filter(b=>b.result==='win').length;
+  set('log-total',fmt(total));set('log-winrate',Math.round((wins/battles.length)*100)+'%');set('log-best',fmt(Math.max(...battles.map(b=>b.earned))));
+  const medals=['🥇','🥈','🥉','4️⃣','5️⃣'];
+  const top=[...battles].sort((a,b)=>b.earned-a.earned).slice(0,5);
+  document.getElementById('lb-list').innerHTML=top.map((b,i)=>`<div class="lb-entry"><div class="lb-rank">${medals[i]||'#'+(i+1)}</div><div class="lb-info"><div class="lb-name">vs ${sanitize(b.opp)}</div><div class="lb-meta">${sanitize(b.date)} · ${sanitize(String(b.coins.toLocaleString()))} coins</div></div><div class="lb-amount">${fmt(b.earned)}</div></div>`).join('');
+  const wl=D.logWin||'Win'; const ll=D.logLoss||'Loss'; const lr=D.logRecent||'Recent battles';
+  list.innerHTML='<div class="card" style="margin-bottom:1rem;"><div class="section-title">'+lr+'</div>'+
+    battles.slice().reverse().slice(0,8).map(b=>`<div class="log-entry"><div><div style="font-weight:500;font-size:13px;color:var(--color-text-primary);">vs ${sanitize(b.opp)}</div><div style="font-size:11px;color:var(--color-text-secondary);">${sanitize(b.date)} · ${sanitize(String(b.coins.toLocaleString()))} coins</div></div><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;font-weight:500;color:#3B6D11;">${fmt(b.earned)}</span><span class="badge ${b.result==='win'?'win':'loss'}">${b.result==='win'?wl:ll}</span></div></div>`).join('')+'</div>';
+}
+
+// ── Gift Goal ──
+function setGoalPlatform(p){goalPlatform=p;document.getElementById('goal-ios').classList.toggle('active',p==='ios');document.getElementById('goal-and').classList.toggle('active',p==='android');calcGoal();}
+function calcGoal(){
+  const target=parseFloat(document.getElementById('goal-target').value)||0;
+  const avgCoins=parseFloat(document.getElementById('goal-avgcoins').value)||1;
+  const progress=parseFloat(document.getElementById('goal-progress').value)||0;
+  const perBattle=coinsToNet(avgCoins,goalPlatform).afterTT;
+  const battlesNeeded=Math.ceil(target/perBattle);
+  const totalCoins=battlesNeeded*avgCoins;
+  const dailyCoins=Math.ceil(totalCoins/7);
+  const pct=Math.min(100,Math.round((progress/dailyCoins)*100));
+  set('goal-battles',battlesNeeded);set('goal-total-coins',totalCoins.toLocaleString());set('goal-daily',dailyCoins.toLocaleString());
+  document.getElementById('goal-bar').style.width=pct+'%';
+  set('goal-pct',pct+(D.goalPctSuffix||'% of daily target'));
+}
+
+// ── Tax ──
+function calcTax(){
+  const monthly=parseFloat(document.getElementById('tax-monthly').value)||0;
+  const annual=monthly*12,seTax=annual*0.153,seDeduct=seTax/2,taxable=annual-seDeduct;
+  let fedRate=0.10;
+  const f=document.getElementById('tax-filing').value;
+  if(f==='single'){if(taxable>609350)fedRate=0.37;else if(taxable>243725)fedRate=0.35;else if(taxable>191950)fedRate=0.32;else if(taxable>100525)fedRate=0.24;else if(taxable>47150)fedRate=0.22;else if(taxable>11600)fedRate=0.12;}
+  else if(f==='married'||f==='surviving'){if(taxable>731200)fedRate=0.37;else if(taxable>487450)fedRate=0.35;else if(taxable>383900)fedRate=0.32;else if(taxable>201050)fedRate=0.24;else if(taxable>94300)fedRate=0.22;else if(taxable>23200)fedRate=0.12;}
+  else if(f==='married_sep'){if(taxable>365600)fedRate=0.37;else if(taxable>243725)fedRate=0.35;else if(taxable>191950)fedRate=0.32;else if(taxable>100525)fedRate=0.24;else if(taxable>47150)fedRate=0.22;else if(taxable>11600)fedRate=0.12;}
+  else{if(taxable>609350)fedRate=0.37;else if(taxable>243700)fedRate=0.35;else if(taxable>191950)fedRate=0.32;else if(taxable>100500)fedRate=0.24;else if(taxable>63100)fedRate=0.22;else if(taxable>16550)fedRate=0.12;}
+  const fedTax=taxable*fedRate,totalTax=seTax+fedTax;
+  set('tax-annual','$'+Math.round(annual).toLocaleString());
+  set('tax-setaside',fmt(monthly*(totalTax/annual||0)));
+  set('tax-rate',(annual>0?Math.round((totalTax/annual)*100):0)+'%');
+  set('tax-se','$'+Math.round(seTax/12).toLocaleString()+'/mo');
+  set('tax-fed','$'+Math.round(fedTax/12).toLocaleString()+'/mo');
+  set('tax-deduct','− $'+Math.round(seDeduct).toLocaleString()+'/yr');
+}
+
+// ── Creator Earnings ──
+function calcTTEarn(){
+  const followers=parseFloat(document.getElementById('tte-followers').value)||0;
+  const views=parseFloat(document.getElementById('tte-views').value)||0;
+  const vpw=parseFloat(document.getElementById('tte-vpw').value)||1;
+  const eng=parseFloat(document.getElementById('tte-eng').value)||0;
+  const niche=parseFloat(document.getElementById('tte-niche').value)||1.0;
+  const vpm=vpw*WEEKS_PER_MONTH,mv=views*vpm;
+  let tier,tc,tb;
+  if(followers>=1e6){tier='Mega / Celebrity';tc='#7C3AED';tb='#EDE9FE';}
+  else if(followers>=5e5){tier='Macro Influencer';tc='#D85A30';tb='#FEF0EB';}
+  else if(followers>=1e5){tier='Mid-Tier Influencer';tc='#3B6D11';tb='#EAF3DE';}
+  else if(followers>=1e4){tier='Micro Influencer';tc='#185FA5';tb='#E8F0FE';}
+  else{tier='Nano Influencer';tc='#888780';tb='#F3F3F2';}
+  const t=document.getElementById('tte-tier');t.textContent=tier;t.style.background=tb;t.style.color=tc;
+  const fL=(mv/1000)*0.02*niche,fH=(mv/1000)*0.04*niche;
+  let bL,bH;
+  if(followers>=1e6){bL=2000;bH=20000;}else if(followers>=5e5){bL=1000;bH=5000;}else if(followers>=1e5){bL=300;bH=1500;}else if(followers>=1e4){bL=50;bH=300;}else{bL=10;bH=50;}
+  const eb=Math.min(2.5,1+(eng/10)),md=followers>=1e5?8:4,deals=Math.min(md,Math.max(1,Math.round(vpm/4)));
+  const brL=bL*deals*eb*niche,brH=bH*deals*eb*niche,aL=brL*0.05,aH=brH*0.15;
+  const tL=fL+brL+aL,tH=fH+brH+aH,tAvg=(tL+tH)/2;
+  const fk=n=>n>=1000?'$'+(n/1000).toFixed(1)+'K':'$'+Math.round(n);
+  const al=D.ttearnAvgLabel||'Average: ';
+  set('tte-range',fk(tL)+' – '+fk(tH));set('tte-avg',al+fk(tAvg)+'/mo');
+  set('tte-fund',fk(fL)+' – '+fk(fH));set('tte-brand',fk(brL)+' – '+fk(brH));set('tte-affiliate',fk(aL)+' – '+fk(aH));
+  set('tte-vpm',Math.round(vpm));
+  set('tte-mviews',mv>=1e6?(mv/1e6).toFixed(1)+'M':(mv/1000).toFixed(0)+'K');
+  set('tte-pervideo',fk(tAvg/vpm));
+}
+
+// ── Gift Values ──
+const GIFTS=[
+  {e:'🌹',n:'Rose',c:1,tier:'small'},{e:'🎮',n:'GG',c:1,tier:'small'},{e:'🍦',n:'Ice Cream Cone',c:1,tier:'small'},
+  {e:'🎵',n:'TikTok',c:1,tier:'small'},{e:'❤️',n:'Heart',c:1,tier:'small'},{e:'💕',n:'Love You',c:1,tier:'small'},
+  {e:'👍',n:'Thumbs Up',c:1,tier:'small'},{e:'🌷',n:'Tulip',c:1,tier:'small'},
+  {e:'🤞',n:'Finger Heart',c:5,tier:'small'},{e:'👑',n:'Drama Queen',c:5,tier:'small'},{e:'🐼',n:'Panda',c:5,tier:'small'},
+  {e:'🫶',n:'Hand Heart',c:10,tier:'small'},{e:'🌸',n:'Perfume',c:20,tier:'small'},
+  {e:'💌',n:'I Love You',c:49,tier:'small'},{e:'🎊',n:'Confetti',c:100,tier:'small'},
+  {e:'🥊',n:'Boxing Gloves',c:100,tier:'small'},{e:'🦆',n:'Duck',c:100,tier:'small'},
+  {e:'😎',n:'Sunglasses',c:199,tier:'small'},{e:'🎂',n:'Birthday Cake',c:300,tier:'mid'},
+  {e:'💸',n:'Money Rain',c:500,tier:'mid'},{e:'🚀',n:'Rocket',c:500,tier:'mid'},
+  {e:'🔷',n:'Galaxy',c:1000,tier:'mid'},{e:'💰',n:"I'm Very Rich",c:1000,tier:'mid'},
+  {e:'🎠',n:'Carousel',c:1500,tier:'mid'},{e:'🦋',n:'Butterfly',c:2000,tier:'mid'},
+  {e:'🧜',n:'Mermaid',c:2988,tier:'mid'},{e:'🎤',n:'Concert',c:3000,tier:'large'},
+  {e:'🏰',n:'Castle',c:5000,tier:'large'},{e:'✈️',n:'Airplane',c:6000,tier:'large'},
+  {e:'🪐',n:'Planet',c:15000,tier:'large'},{e:'💎',n:'Diamond Flight',c:18000,tier:'large'},
+  {e:'🦁',n:'Lion',c:29999,tier:'whale'},{e:'✨',n:'Universe',c:44999,tier:'whale'}
+];
+
+function giftViewerUSD(c){return c*VIEWER_COST_PER_COIN;}
+function giftCreatorUSD(c){return coinsToNet(c,'android').afterTT;}
+
+function renderGiftTable(query){
+  const q=query.toLowerCase();
+  const filtered=q?GIFTS.filter(g=>g.n.toLowerCase().includes(q)):GIFTS;
+  const tbody=document.getElementById('gift-tbody');
+  const d=D;
+  const tL={small:d.tierSmall||'Small',mid:d.tierMid||'Mid',large:d.tierLarge||'Large',whale:d.tierWhale||'🐋 Whale'};
+  const tC={small:'tier-small',mid:'tier-mid',large:'tier-large',whale:'tier-whale'};
+  if(!filtered.length){tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--color-text-secondary);">${d.giftNoResults||'No gifts found.'}</td></tr>`;return;}
+  tbody.innerHTML=filtered.map(g=>`<tr><td><span style="font-size:18px">${g.e}</span> <span class="gift-name">${sanitize(g.n)}</span></td><td>${g.c.toLocaleString()}</td><td>~$${giftViewerUSD(g.c).toFixed(2)}</td><td class="gift-creator">~$${giftCreatorUSD(g.c).toFixed(2)}</td><td><span class="gift-tier ${tC[g.tier]}">${tL[g.tier]}</span></td></tr>`).join('');
+}
+
+function filterGifts(){
+  const q=document.getElementById('gift-search').value.trim();
+  renderGiftTable(q);
+  const match=q.length>1?GIFTS.find(g=>g.n.toLowerCase().includes(q.toLowerCase())):null;
+  const card=document.getElementById('gift-result-card');
+  if(match){
+    set('gift-res-emoji',match.e);set('gift-res-name',match.n);
+    set('gift-res-coins',match.c.toLocaleString()+' coins');
+    set('gift-res-viewer','~$'+giftViewerUSD(match.c).toFixed(2));
+    set('gift-res-creator','~$'+giftCreatorUSD(match.c).toFixed(2));
+    card.style.display='block';
+  }else{card.style.display='none';}
+}
+
+// ── LIVE Optimizer Hashtags ──
+const HASHTAGS=['#TikTokLIVE','#TikTokBattle','#LiveBattle','#TikTokGifts','#TikTokCreator','#LiveStreaming','#BattleCreator','#TikTokMoney','#TikTokCommunity','#GiftMe','#TikTokFYP','#LIVE','#TikTokBattles','#CreatorEconomy','#TikTokTips','#LiveGifts','#TikTokBattleKing','#BattleQueen','#TikTokCoins','#StreamerLife'];
+function initHashtags(){
+  document.getElementById('hashtag-list').innerHTML=HASHTAGS.map(h=>`<span class="hashtag" onclick="copyHashtag(this,'${h}')">${h}</span>`).join('');
+}
+function copyHashtag(el,tag){
+  navigator.clipboard.writeText(tag).catch(()=>{});
+  el.classList.add('copied');el.textContent=tag+' ✓';
+  setTimeout(()=>{el.classList.remove('copied');el.textContent=tag;},2000);
+}
+
+// ── Dashboard ──
+function initDashboard(){
+  const noData=document.getElementById('dashboard-no-data');
+  const content=document.getElementById('dashboard-content');
+  if(!battles.length){noData.style.display='block';content.style.display='none';return;}
+  noData.style.display='none';content.style.display='block';
+  const total=battles.reduce((s,b)=>s+b.earned,0);
+  const wins=battles.filter(b=>b.result==='win').length;
+  set('dash-total',fmt(total));set('dash-battles',battles.length);set('dash-avg',fmt(total/battles.length));
+  const last10=[...battles].slice(-10);
+  if(earningsChart){earningsChart.destroy();}
+  earningsChart=new Chart(document.getElementById('chart-earnings'),{type:'bar',data:{labels:last10.map(b=>sanitize(b.opp).substring(0,8)),datasets:[{label:'Earnings',data:last10.map(b=>parseFloat(b.earned.toFixed(2))),backgroundColor:'#D85A30',borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v}}}}});
+  if(winlossChart){winlossChart.destroy();}
+  winlossChart=new Chart(document.getElementById('chart-winloss'),{type:'doughnut',data:{labels:[D.logWin||'Wins',D.logLoss||'Losses'],datasets:[{data:[wins,battles.length-wins],backgroundColor:['#3B6D11','#A32D2D'],borderWidth:0}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const de=[0,0,0,0,0,0,0];
+  battles.forEach(b=>{try{const dd=new Date(b.ts||b.date);de[dd.getDay()]+=b.earned;}catch(e){}});
+  if(dowChart){dowChart.destroy();}
+  dowChart=new Chart(document.getElementById('chart-dayofweek'),{type:'bar',data:{labels:days,datasets:[{label:'Earnings',data:de.map(v=>parseFloat(v.toFixed(2))),backgroundColor:'#378ADD',borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v}}}}});
+}
+
+// ── Navigation helpers ──
+function goToDashboard(){const btn=document.getElementById('nav-dashboard');if(btn)btn.click();window.scrollTo({top:0,behavior:'smooth'});}
+function goToBattleLog(){const btn=document.getElementById('nav-log');if(btn)btn.click();window.scrollTo({top:0,behavior:'smooth'});}
+
+// ── FAQ ──
+function toggleFaq(btn){btn.closest('.faq-item').classList.toggle('open');}
+
+// Run init immediately using inline fallback D — page is fully functional right away
+calcEarnings();calcSplit();calcGoal();calcTax();calcTTEarn();
+renderLog();fetchCohosts();initHashtags();renderGiftTable('');
+
+// Async: load full JSON for saved language and upgrade all labels silently
+(async()=>{
+  const saved=localStorage.getItem('tiktok_lang')||'en';
+  try{
+    const data=await loadLang(saved);
+    if(data&&data.langLabel){
+      currentLang=saved; D=data;
+      document.documentElement.lang=saved;
+      set('lang-label',data.langLabel);
+      document.querySelectorAll('.lang-option').forEach(o=>o.classList.toggle('active',o.id==='lang-opt-'+saved));
+      applyLang(data); // always apply — upgrades fallback labels to full JSON
+      calcEarnings(); renderLog(); calcTTEarn();
+    }
+  }catch(e){/* stay on fallback */}
+})();
+
+// ── Deep-linking from external pages (e.g. blog articles → tiktonomics.com/#log) ──
+function openTabFromHash(){
+  const id=(location.hash||'').replace('#','').trim();
+  if(!id) return;
+  const btn=document.getElementById('nav-'+id);
+  if(btn) btn.click();
+}
+openTabFromHash();
+window.addEventListener('hashchange', openTabFromHash);
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"How much is 1 TikTok coin worth in USD?","acceptedAnswer":{"@type":"Answer","text":"Viewers pay approximately $0.015 per coin. As a creator you receive 50% of what the viewer spent. So 1,000 coins gifted earns approximately $7.50 on Android and $5.25 on iOS."}},
+  {"@type":"Question","name":"How much does a Lion gift pay a TikTok creator?","acceptedAnswer":{"@type":"Answer","text":"A Lion costs 29,999 coins (approximately $450 for the viewer). After TikTok's 50% cut the creator receives approximately $225 on Android or $157 on iOS."}},
+  {"@type":"Question","name":"How much do TikTok battles pay?","acceptedAnswer":{"@type":"Answer","text":"Small creators earn $12 to $50 per battle. Mid-tier (10K to 100K followers) earn $50 to $250. Large creators (100K to 500K) earn $250 to $1,250. Top streamers (500K+) earn $1,250 or more per battle."}},
+  {"@type":"Question","name":"Do TikTok creators have to pay taxes on their earnings?","acceptedAnswer":{"@type":"Answer","text":"Yes. All TikTok income is taxable. Creators are self-employed and must pay 15.3% self-employment tax plus federal income tax. TikTok does not withhold taxes. Set aside 25 to 35 percent of every payout."}},
+  {"@type":"Question","name":"What is the minimum withdrawal amount on TikTok LIVE?","acceptedAnswer":{"@type":"Answer","text":"The minimum withdrawal is $100 USD via PayPal in 3 to 5 business days or bank transfer in 5 to 10 business days."}},
+  {"@type":"Question","name":"Are all TikTok accounts eligible for monetization?","acceptedAnswer":{"@type":"Answer","text":"No. LIVE Gifts and Battles require 18+ and 1,000 followers. The Creator Fund requires 18+, 10,000 followers, and 100,000 views in the past 30 days."}}
+]}
+</script>
+</body>
+</html>

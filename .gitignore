@@ -1,0 +1,6 @@
+# Local/environment-specific — never commit real DB credentials
+api/config.php
+
+# OS/editor junk
+.DS_Store
+Thumbs.db

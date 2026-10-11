@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TikTok Battle Earnings Hub</title>
+  <meta name="description" content="Calculate your TikTok battle earnings, split co-host income, track battle history, plan gift goals, and estimate taxes — all in one place." />
+  <meta property="og:title" content="TikTok Battle Earnings Hub" />
+  <meta property="og:description" content="Free TikTok battle earnings calculator, co-host split, tax estimator and more." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --font-sans: 'DM Sans', sans-serif;
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #666;
+      --color-background-primary: #fff;
+      --color-background-secondary: #f5f5f4;
+      --color-background-info: #e8f0fe;
+      --color-text-info: #1a56db;
+      --color-border-secondary: #d1d5db;
+      --color-border-tertiary: #e5e7eb;
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: #fafaf9;
+      color: var(--color-text-primary);
+      min-height: 100vh;
+    }
+
+    .page-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-border-tertiary);
+    }
+    .site-header .logo { font-size: 28px; }
+    .site-header h1 { font-size: 20px; font-weight: 600; color: var(--color-text-primary); }
+    .site-header p { font-size: 12px; color: var(--color-text-secondary); }
+
+    /* --- nav --- */
+    .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .nav button {
+      font-size: 12px; padding: 6px 12px; border-radius: 20px;
+      border: 0.5px solid var(--color-border-secondary);
+      background: var(--color-background-secondary);
+      color: var(--color-text-secondary); cursor: pointer; transition: all 0.15s;
+      font-family: var(--font-sans);
+    }
+    .nav button.active { background: #D85A30; color: #fff; border-color: #D85A30; }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .card {
+      background: var(--color-background-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-lg);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+    .value.green { color: #3B6D11; }
+    .value.coral { color: #D85A30; }
+    .value.net { color: #3B6D11; }
+
+    .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 1rem; }
+
+    .input-group { margin-bottom: 1rem; }
+    .input-group label { display: block; font-size: 13px; color: var(--color-text-secondary); margin-bottom: 6px; }
+
+    .breakdown-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary);
+      font-size: 13px;
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-row .cut { color: #A32D2D; font-size: 12px; }
+    .breakdown-row .net { color: #3B6D11; font-weight: 500; }
+
+    .toggle-group { display: flex; gap: 8px; margin-bottom: 1rem; }
+    .toggle-group button {
+      flex: 1; padding: 8px; font-size: 12px; border-radius: var(--border-radius-md);
+      border: 0.5px solid var(--color-border-secondary);
+      background: var(--color-background-secondary);
+      color: var(--color-text-secondary); cursor: pointer;
+      font-family: var(--font-sans);
+    }
+    .toggle-group button.active { background: #D85A30; color: #fff; border-color: #D85A30; }
+
+    .log-entry {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary);
+      font-size: 13px;
+    }
+    .log-entry:last-child { border-bottom: none; }
+    .badge {
+      font-size: 11px; padding: 2px 8px; border-radius: 20px;
+      background: var(--color-background-info); color: var(--color-text-info);
+    }
+    .badge.win { background: #EAF3DE; color: #3B6D11; }
+    .badge.loss { background: #FCEBEB; color: #A32D2D; }
+
+    .section-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+
+    .goal-bar-wrap { background: var(--color-background-secondary); border-radius: 4px; height: 8px; margin: 8px 0; overflow: hidden; }
+    .goal-bar { height: 8px; background: #D85A30; border-radius: 4px; transition: width 0.3s; }
+
+    .scan-zone {
+      border: 1.5px dashed var(--color-border-secondary);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem 1rem; text-align: center; margin-bottom: 1rem;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .scan-zone:hover { background: var(--color-background-secondary); }
+    .scan-icon { font-size: 28px; margin-bottom: 8px; }
+
+    .tax-band {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary);
+      font-size: 13px;
+    }
+    .tax-band:last-child { border-bottom: none; }
+    .tax-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    select, input[type=number], input[type=text] {
+      width: 100%; padding: 8px 10px; font-size: 14px;
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--border-radius-md);
+      background: var(--color-background-primary);
+      color: var(--color-text-primary);
+      font-family: var(--font-sans);
+    }
+    input[type=range] { width: 100%; }
+
+    .action-btn {
+      width: 100%; padding: 10px; font-size: 13px; font-weight: 500;
+      border-radius: var(--border-radius-md);
+      background: #D85A30; color: #fff; border: none; cursor: pointer;
+      margin-top: 8px; transition: opacity 0.15s;
+      font-family: var(--font-sans);
+    }
+    .action-btn:hover { opacity: 0.88; }
+
+    .split-bar-wrap { display: flex; height: 10px; border-radius: 10px; overflow: hidden; margin: 10px 0; }
+    .split-a { background: #D85A30; transition: width 0.2s; }
+    .split-b { background: #378ADD; transition: width 0.2s; }
+
+    .empty-state { text-align: center; padding: 2rem 1rem; color: var(--color-text-secondary); font-size: 13px; }
+
+    .scenario-btn {
+      font-size: 11px; padding: 4px 10px;
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: 20px; background: var(--color-background-secondary);
+      color: var(--color-text-secondary); cursor: pointer; margin-right: 6px; margin-bottom: 6px;
+      font-family: var(--font-sans);
+    }
+    .scenario-btn:hover { border-color: #D85A30; color: #D85A30; }
+
+    .clear-btn {
+      font-size: 11px; padding: 4px 10px;
+      border: 0.5px solid #A32D2D; border-radius: 20px;
+      background: #FCEBEB; color: #A32D2D; cursor: pointer;
+      font-family: var(--font-sans); margin-top: 8px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid var(--color-border-tertiary);
+    }
+
+    /* FAQ tab styles */
+    .faq-item { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); margin-bottom: 8px; background: var(--color-background-primary); overflow: hidden; }
+    .faq-question { width: 100%; text-align: left; padding: 14px 16px; font-size: 14px; font-weight: 500; color: var(--color-text-primary); background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--font-sans); line-height: 1.4; }
+    .faq-question:hover { background: var(--color-background-secondary); }
+    .faq-chevron { flex-shrink: 0; font-size: 12px; color: var(--color-text-secondary); transition: transform 0.2s; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-answer { display: none; padding: 0 16px 14px; font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; border-top: 0.5px solid var(--color-border-tertiary); }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-answer strong { color: var(--color-text-primary); }
+    .faq-answer table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12px; }
+    .faq-answer th, .faq-answer td { text-align: left; padding: 6px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .faq-answer th { font-weight: 600; color: var(--color-text-primary); background: var(--color-background-secondary); }
+    .faq-category { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #D85A30; margin: 20px 0 8px; }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="site-header">
+    <div class="logo">⚔️</div>
+    <div>
+      <h1>TikTok Battle Hub</h1>
+      <p>Earnings · splits · logs · goals · taxes</p>
+    </div>
+  </div>
+
+  <div class="hub">
+    <div class="nav">
+      <button class="active" onclick="switchTab('calc', this)">Calculator</button>
+      <button onclick="switchTab('scanner', this)">Scoreboard scanner</button>
+      <button onclick="switchTab('split', this)">Co-host split</button>
+      <button onclick="switchTab('log', this)">Battle log</button>
+      <button onclick="switchTab('goal', this)">Gift goal</button>
+      <button onclick="switchTab('tax', this)">Tax estimator</button>
+      <button onclick="switchTab('ttearn', this)">TikTok Earnings</button>
+      <button onclick="switchTab('faq', this)">FAQs</button>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="panel active" id="tab-calc">
+      <div style="margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 6px;">
+        <span style="font-size: 11px; color: var(--color-text-secondary);">Quick scenarios:</span>
+        <button class="scenario-btn" onclick="setScenario(50000)">Small streamer</button>
+        <button class="scenario-btn" onclick="setScenario(200000)">Mid-tier</button>
+        <button class="scenario-btn" onclick="setScenario(1000000)">Top streamer</button>
+      </div>
+
+      <div class="input-group">
+        <label>Coins received per battle</label>
+        <input type="number" id="coins" value="50000" oninput="calcEarnings()" min="0" />
+      </div>
+
+      <div class="input-group">
+        <label>Battles per week</label>
+        <input type="number" id="battles" value="5" oninput="calcEarnings()" min="1" />
+      </div>
+
+      <div class="input-group">
+        <label>Purchase platform (affects creator payout)</label>
+        <div class="toggle-group">
+          <button id="plat-ios" class="active" onclick="setPlatform('ios')">iOS (Apple 30% cut)</button>
+          <button id="plat-and" onclick="setPlatform('android')">Android / Web</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Where your money goes</div>
+        <div id="breakdown"></div>
+      </div>
+
+      <div class="row">
+        <div class="card" style="margin-bottom:0">
+          <div class="label">Per battle</div>
+          <div class="value net" id="r-battle">—</div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="label">Per week</div>
+          <div class="value net" id="r-week">—</div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="label">Per month</div>
+          <div class="value net" id="r-month">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCANNER -->
+    <div class="panel" id="tab-scanner">
+      <div class="scan-zone" onclick="document.getElementById('img-upload').click()">
+        <div class="scan-icon">📸</div>
+        <div style="font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px;">Upload scoreboard screenshot</div>
+        <div style="font-size: 12px; color: var(--color-text-secondary);">Tap to choose image from your device</div>
+        <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="handleScan(event)" />
+      </div>
+
+      <div class="card" style="margin-bottom:1rem;">
+        <div class="section-title">Or enter scores manually</div>
+        <div class="input-group" style="margin-bottom:8px;">
+          <label>Your score (coins shown on scoreboard)</label>
+          <input type="number" id="scan-your" value="" placeholder="e.g. 125000" oninput="calcScan()" />
+        </div>
+        <div class="input-group" style="margin-bottom:0;">
+          <label>Opponent score (coins)</label>
+          <input type="number" id="scan-opp" value="" placeholder="e.g. 89000" oninput="calcScan()" />
+        </div>
+      </div>
+
+      <div id="scan-result" style="display:none">
+        <div class="row">
+          <div class="card" style="margin-bottom:0">
+            <div class="label">You earned</div>
+            <div class="value net" id="scan-you-earn">—</div>
+          </div>
+          <div class="card" style="margin-bottom:0">
+            <div class="label">Opponent earned</div>
+            <div class="value coral" id="scan-opp-earn">—</div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:10px; margin-bottom:0">
+          <div class="breakdown-row">
+            <span>Winner</span>
+            <span id="scan-winner" style="font-weight:500; color: var(--color-text-primary);"></span>
+          </div>
+          <div class="breakdown-row">
+            <span>Coin difference</span>
+            <span id="scan-diff"></span>
+          </div>
+          <div class="breakdown-row">
+            <span>Total coins in battle</span>
+            <span id="scan-total"></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="scan-ai-note" style="display:none; font-size:12px; color: var(--color-text-secondary); margin-top:8px; padding: 10px; background: var(--color-background-secondary); border-radius: var(--border-radius-md);">
+        Image uploaded. Enter the coin counts from the scoreboard manually above to calculate earnings.
+      </div>
+    </div>
+
+    <!-- CO-HOST SPLIT -->
+    <div class="panel" id="tab-split">
+      <div class="input-group">
+        <label>Total coins in the battle</label>
+        <input type="number" id="sp-coins" value="100000" oninput="calcSplit()" />
+      </div>
+
+      <div class="input-group">
+        <label>Your split: <span id="sp-pct-label">60</span>%</label>
+        <input type="range" id="sp-pct" min="10" max="90" value="60" step="5" oninput="calcSplit()" />
+      </div>
+
+      <div class="input-group">
+        <label>Purchase platform</label>
+        <div class="toggle-group">
+          <button id="sp-ios" class="active" onclick="setSpPlatform('ios')">iOS</button>
+          <button id="sp-and" onclick="setSpPlatform('android')">Android / Web</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Split breakdown</div>
+        <div class="split-bar-wrap">
+          <div class="split-a" id="sp-bar-a" style="width:60%"></div>
+          <div class="split-b" id="sp-bar-b" style="width:40%"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:11px; color: var(--color-text-secondary); margin-bottom:12px;">
+          <span style="color:#D85A30">You</span>
+          <span style="color:#378ADD">Co-host</span>
+        </div>
+        <div class="breakdown-row">
+          <span>You take home</span>
+          <span class="net" id="sp-you">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Co-host takes home</span>
+          <span style="color:#185FA5; font-weight:500" id="sp-cohost">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span>TikTok + platform fees</span>
+          <span class="cut" id="sp-fees">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BATTLE LOG -->
+    <div class="panel" id="tab-log">
+      <div class="card">
+        <div class="section-title">Log a battle</div>
+        <div class="row" style="margin-bottom:8px;">
+          <div class="input-group" style="margin-bottom:0;">
+            <label>Coins received</label>
+            <input type="number" id="log-coins" placeholder="50000" />
+          </div>
+          <div class="input-group" style="margin-bottom:0;">
+            <label>Opponent name</label>
+            <input type="text" id="log-opp" placeholder="@username" />
+          </div>
+        </div>
+        <div class="toggle-group" style="margin-bottom:8px;">
+          <button id="log-win" class="active" onclick="setResult('win')">Win</button>
+          <button id="log-loss" onclick="setResult('loss')">Loss</button>
+        </div>
+        <button class="action-btn" onclick="addLog()">Add to log</button>
+      </div>
+
+      <div id="log-list"></div>
+      <div id="log-stats" style="display:none">
+        <div class="row">
+          <div class="card" style="margin-bottom:0">
+            <div class="label">Total earned</div>
+            <div class="value net" id="log-total">—</div>
+          </div>
+          <div class="card" style="margin-bottom:0">
+            <div class="label">Win rate</div>
+            <div class="value" id="log-winrate">—</div>
+          </div>
+          <div class="card" style="margin-bottom:0">
+            <div class="label">Best session</div>
+            <div class="value coral" id="log-best">—</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <button class="clear-btn" onclick="clearLog()">Clear all logs</button>
+        </div>
+      </div>
+      <div class="empty-state" id="log-empty">No battles logged yet. Add your first one above.</div>
+    </div>
+
+    <!-- GIFT GOAL -->
+    <div class="panel" id="tab-goal">
+      <div class="input-group">
+        <label>Income goal (USD per week)</label>
+        <input type="number" id="goal-target" value="500" oninput="calcGoal()" />
+      </div>
+      <div class="input-group">
+        <label>Average coins per battle</label>
+        <input type="number" id="goal-avgcoins" value="50000" oninput="calcGoal()" />
+      </div>
+      <div class="input-group">
+        <label>Purchase platform</label>
+        <div class="toggle-group">
+          <button id="goal-ios" class="active" onclick="setGoalPlatform('ios')">iOS</button>
+          <button id="goal-and" onclick="setGoalPlatform('android')">Android / Web</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">What you need to hit your goal</div>
+        <div class="breakdown-row">
+          <span>Battles needed per week</span>
+          <span style="font-weight:500; color: var(--color-text-primary);" id="goal-battles">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Total coins needed per week</span>
+          <span style="font-weight:500; color: var(--color-text-primary);" id="goal-total-coins">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Coins needed per day (7-day week)</span>
+          <span style="font-weight:500; color: var(--color-text-primary);" id="goal-daily">—</span>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div style="font-size:12px; color: var(--color-text-secondary); margin-bottom:6px;">Progress tracker — coins received today</div>
+          <input type="number" id="goal-progress" placeholder="0" oninput="calcGoal()" style="margin-bottom:8px;" />
+          <div class="goal-bar-wrap">
+            <div class="goal-bar" id="goal-bar" style="width:0%"></div>
+          </div>
+          <div style="font-size:12px; color: var(--color-text-secondary); text-align:right;" id="goal-pct">0% of daily target</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAX -->
+    <div class="panel" id="tab-tax">
+      <div class="input-group">
+        <label>Estimated monthly earnings (USD)</label>
+        <input type="number" id="tax-monthly" value="2000" oninput="calcTax()" />
+      </div>
+      <div class="input-group">
+        <label>Filing status</label>
+        <select id="tax-filing" onchange="calcTax()">
+          <option value="single">Single</option>
+          <option value="married">Married filing jointly</option>
+          <option value="married_sep">Married filing separately</option>
+          <option value="head">Head of household</option>
+          <option value="surviving">Qualifying surviving spouse</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="card" style="margin-bottom:0">
+          <div class="label">Annual gross</div>
+          <div class="value" id="tax-annual">—</div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="label">Set aside monthly</div>
+          <div class="value coral" id="tax-setaside">—</div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="label">Est. tax rate</div>
+          <div class="value" id="tax-rate">—</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <div class="section-title">Estimated tax breakdown</div>
+        <div class="tax-band">
+          <div class="tax-dot" style="background:#D85A30"></div>
+          <span style="flex:1">Self-employment tax (15.3%)</span>
+          <span id="tax-se" style="font-weight:500; color: var(--color-text-primary);"></span>
+        </div>
+        <div class="tax-band">
+          <div class="tax-dot" style="background:#378ADD"></div>
+          <span style="flex:1">Federal income tax (est.)</span>
+          <span id="tax-fed" style="font-weight:500; color: var(--color-text-primary);"></span>
+        </div>
+        <div class="tax-band">
+          <div class="tax-dot" style="background:#888780"></div>
+          <span style="flex:1">Deductible SE half</span>
+          <span id="tax-deduct" style="font-weight:500; color: #3B6D11;"></span>
+        </div>
+      </div>
+
+      <div style="font-size:11px; color: var(--color-text-secondary); margin-top:10px; line-height:1.6;">
+        This is an estimate for US creators only. State taxes, deductions, and credits are not included. Consult a tax professional for your actual liability.
+      </div>
+    </div>
+    <!-- TIKTOK EARNINGS -->
+    <div class="panel" id="tab-ttearn">
+      <div style="margin-bottom:12px;">
+        <div style="font-size:13px; color:var(--color-text-secondary); line-height:1.6;">
+          Estimates earnings from the <strong>TikTok Creator Fund, brand deals,</strong> and <strong>affiliate income</strong> based on your audience and content niche.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-group" style="margin-bottom:0">
+          <label>Total Followers</label>
+          <input type="number" id="tte-followers" value="100000" oninput="calcTTEarn()" />
+        </div>
+        <div class="input-group" style="margin-bottom:0">
+          <label>Avg Views per Video</label>
+          <input type="number" id="tte-views" value="50000" oninput="calcTTEarn()" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-group" style="margin-bottom:0">
+          <label>Videos per Week</label>
+          <input type="number" id="tte-vpw" value="5" min="1" oninput="calcTTEarn()" />
+        </div>
+        <div class="input-group" style="margin-bottom:0">
+          <label>Engagement Rate (%)</label>
+          <input type="number" id="tte-eng" value="5" min="0" max="100" step="0.1" oninput="calcTTEarn()" />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Content Niche</label>
+        <select id="tte-niche" onchange="calcTTEarn()">
+          <option value="1.0">General / Lifestyle</option>
+          <option value="1.3">Beauty / Fashion</option>
+          <option value="2.0">Finance / Business</option>
+          <option value="0.9">Gaming</option>
+          <option value="1.1">Food / Cooking</option>
+          <option value="1.2">Fitness / Health</option>
+          <option value="0.8">Comedy / Entertainment</option>
+          <option value="1.4">Education</option>
+          <option value="1.1">Travel</option>
+          <option value="1.5">Tech / Software</option>
+        </select>
+      </div>
+
+      <!-- Tier badge -->
+      <div id="tte-tier-wrap" style="text-align:center; margin-bottom:1rem;">
+        <span id="tte-tier" style="
+          display:inline-block; padding:6px 20px; border-radius:20px;
+          font-size:13px; font-weight:500;
+          background:#EAF3DE; color:#3B6D11;
+        ">—</span>
+      </div>
+
+      <!-- Earnings result card -->
+      <div style="background:#1a1a2e; border-radius:var(--border-radius-lg); padding:1.5rem 1.25rem; text-align:center; margin-bottom:1rem;">
+        <div style="font-size:12px; color:#aaa; margin-bottom:8px; font-weight:500; letter-spacing:0.5px; text-transform:uppercase;">Estimated Monthly Earnings</div>
+        <div id="tte-range" style="font-size:28px; font-weight:600; color:#fff; margin-bottom:6px;">—</div>
+        <div id="tte-avg" style="font-size:13px; color:#aaa;">—</div>
+      </div>
+
+      <!-- Breakdown -->
+      <div class="card">
+        <div class="section-title">Revenue source breakdown</div>
+        <div class="tax-band">
+          <div class="tax-dot" style="background:#D85A30"></div>
+          <span style="flex:1">Creator Fund / TTAP</span>
+          <span id="tte-fund" style="font-weight:500; color:var(--color-text-primary);"></span>
+        </div>
+        <div class="tax-band">
+          <div class="tax-dot" style="background:#378ADD"></div>
+          <span style="flex:1">Brand deals (est.)</span>
+          <span id="tte-brand" style="font-weight:500; color:var(--color-text-primary);"></span>
+        </div>
+        <div class="tax-band">
+          <div class="tax-dot" style="background:#8B5CF6"></div>
+          <span style="flex:1">Affiliate / other</span>
+          <span id="tte-affiliate" style="font-weight:500; color:var(--color-text-primary);"></span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card" style="margin-bottom:0">
+          <div class="label">Monthly videos</div>
+          <div class="value" id="tte-vpm">—</div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="label">Monthly views</div>
+          <div class="value" id="tte-mviews">—</div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="label">Est. per video</div>
+          <div class="value net" id="tte-pervideo">—</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px; color:var(--color-text-secondary); margin-top:10px; line-height:1.6;">
+        Estimates based on average Creator Fund rates ($0.02–$0.04/1K views), typical brand deal rates by follower tier, and niche CPM multipliers. Actual earnings vary widely. Not financial advice.
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="panel" id="tab-faq">
+      <div style="margin-bottom:16px;">
+        <div style="font-size:18px; font-weight:600; color:var(--color-text-primary); margin-bottom:4px;">Frequently Asked Questions</div>
+        <div style="font-size:13px; color:var(--color-text-secondary);">Everything you need to know about TikTok coins, battle earnings, taxes and creator income.</div>
+      </div>
+
+      <div class="faq-category">💰 Coins &amp; Value</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How much is 1 TikTok coin worth in USD?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <strong>1 TikTok coin is worth approximately $0.0105 USD</strong> when purchased, but creators only receive a fraction of that. TikTok sells coins in bundles — the more you buy, the lower the per-coin cost.<table><tr><th>Coins</th><th>Approx. cost</th><th>Per coin</th></tr><tr><td>65</td><td>$0.99</td><td>~$0.015</td></tr><tr><td>330</td><td>$4.99</td><td>~$0.015</td></tr><tr><td>1,321</td><td>$19.99</td><td>~$0.015</td></tr><tr><td>6,607</td><td>$99.99</td><td>~$0.015</td></tr></table>
+          As a <strong>creator</strong>, you receive roughly <strong>$0.005 per coin</strong> after TikTok's 50% revenue share. So 10,000 coins = ~$50 gross, but your payout is closer to <strong>$25</strong>.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How do TikTok coins turn into real money for creators?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <strong>Step 1 — Viewers buy coins</strong> with real money from their app store.<br><br>
+          <strong>Step 2 — Coins become Diamonds:</strong> When viewers send gifts during a LIVE or battle, TikTok converts coins into Diamonds at ~50% — so 1,000 coins gifted = ~500 Diamonds.<br><br>
+          <strong>Step 3 — Diamonds become cash:</strong> You cash out via PayPal or bank transfer. 1 Diamond ≈ $0.005 USD. Minimum withdrawal is $100.<br><br>
+          <strong>iOS note:</strong> If the viewer bought coins through the Apple App Store, Apple takes a 30% cut first — meaning your effective earnings per coin are lower for iOS-sourced gifts.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What percentage does TikTok take from gifts and battles?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          TikTok keeps <strong>approximately 50%</strong> of all gift revenue. On iOS, Apple takes an additional <strong>30%</strong> from the viewer's payment first.<table><tr><th>Party</th><th>Cut</th><th>Per $1 (iOS)</th></tr><tr><td>Apple</td><td>30%</td><td>$0.30</td></tr><tr><td>TikTok</td><td>~35%</td><td>$0.35</td></tr><tr><td><strong>You</strong></td><td><strong>~35%</strong></td><td><strong>~$0.35</strong></td></tr></table>
+          On Android/web purchases, Apple's cut disappears — your share improves to roughly <strong>50 cents per dollar</strong>.
+        </div>
+      </div>
+
+      <div class="faq-category">⚔️ TikTok Battles</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How much do TikTok battles pay?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <table><tr><th>Creator size</th><th>Avg coins/battle</th><th>Est. payout</th></tr><tr><td>Small (&lt;10K)</td><td>5,000–20,000</td><td>$12–$50</td></tr><tr><td>Mid-tier (10K–100K)</td><td>20,000–100,000</td><td>$50–$250</td></tr><tr><td>Large (100K–500K)</td><td>100,000–500,000</td><td>$250–$1,250</td></tr><tr><td>Top (500K+)</td><td>500,000+</td><td>$1,250+</td></tr></table>
+          Estimates after TikTok's 50% cut using Android/web purchase rates. iOS earnings are ~30% lower per coin.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Does the winner of a TikTok battle earn more?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <strong>Both creators earn from their own side's gifts</strong> — you keep the coins your supporters send, and your opponent keeps theirs. Winning does not change your payout from gifts already received.<br><br>
+          However, winning <strong>indirectly increases earnings</strong> because it boosts platform visibility, motivates audiences to gift more aggressively, and attracts more viewers to future battles.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What is a co-host battle split and how does it work?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          In a co-hosted battle, two creators team up on the same side. The coins gifted to your team are split based on a pre-agreed arrangement:<br><br>
+          — <strong>50/50</strong> — equal split for equal-sized audiences<br>
+          — <strong>60/40</strong> — the host who drives more viewers earns more<br>
+          — <strong>70/30</strong> — when one creator brings significantly more traffic<br><br>
+          Always agree on your split <strong>before</strong> the battle starts. Use the Co-host Split calculator above to see exact take-home amounts after fees.
+        </div>
+      </div>
+
+      <div class="faq-category">📈 Creator Fund &amp; Regular Earnings</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How much does the TikTok Creator Fund pay per 1,000 views?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <table><tr><th>Program</th><th>Rate per 1K views</th><th>Min. video length</th></tr><tr><td>Creator Fund (legacy)</td><td>$0.02–$0.04</td><td>Any</td></tr><tr><td>Creativity Program</td><td>$0.40–$1.00+</td><td>1 minute</td></tr></table>
+          Rates vary by country, niche, and engagement rate. US creators in high-CPM niches (finance, tech) earn at the top of these ranges. The Creativity Program pays up to <strong>25× more</strong> than the legacy fund.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How much can a creator with 100,000 followers make per month?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <table><tr><th>Income source</th><th>Est. monthly range</th></tr><tr><td>Creator Fund / Creativity Program</td><td>$50–$300</td></tr><tr><td>Brand deals (1–2/month)</td><td>$300–$1,500</td></tr><tr><td>LIVE gifts &amp; battles</td><td>$200–$1,000+</td></tr><tr><td>Affiliate commissions</td><td>$50–$300</td></tr></table>
+          The Creator Fund alone won't replace a full-time income at 100K followers. The real money comes from <strong>brand deals, LIVE gifts, and affiliate partnerships</strong>.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What content niches earn the most on TikTok?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <table><tr><th>Niche</th><th>CPM</th></tr><tr><td>Finance / Business</td><td>⭐⭐⭐⭐⭐ Highest</td></tr><tr><td>Tech / Software</td><td>⭐⭐⭐⭐⭐ Very high</td></tr><tr><td>Education</td><td>⭐⭐⭐⭐ High</td></tr><tr><td>Beauty / Fashion</td><td>⭐⭐⭐⭐ High</td></tr><tr><td>Fitness / Health</td><td>⭐⭐⭐ Medium</td></tr><tr><td>Gaming</td><td>⭐⭐ Lower</td></tr><tr><td>Comedy / Entertainment</td><td>⭐⭐ Lower</td></tr></table>
+        </div>
+      </div>
+
+      <div class="faq-category">🧾 Taxes for TikTok Creators</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Do TikTok creators have to pay taxes on their earnings?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <strong>Yes.</strong> All TikTok income — gifts, battles, brand deals, Creator Fund, affiliate — is taxable. As a creator the IRS considers you <strong>self-employed</strong>:<br><br>
+          — Pay <strong>self-employment tax (15.3%)</strong> on net earnings<br>
+          — Pay <strong>federal income tax</strong> on top based on your bracket<br>
+          — Possibly owe <strong>state income tax</strong> depending on your state<br>
+          — Make <strong>quarterly estimated payments</strong> — TikTok does not withhold taxes<br><br>
+          Rule of thumb: set aside <strong>25–35%</strong> of every payout. Use the Tax Estimator tab to calculate your amount.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Does TikTok send a 1099 tax form to creators?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <strong>Yes, if you earn over $600 in a calendar year.</strong> TikTok sends a <strong>1099-NEC</strong> by January 31st of the following year.<br><br>
+          Even if you earn <em>under</em> $600 and don't receive a 1099, you are still legally required to report that income. The IRS threshold for receiving a form is different from the threshold for reporting — <strong>all self-employment income must be reported</strong> regardless of amount.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What business expenses can TikTok creators deduct from taxes?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <table><tr><th>Expense</th><th>Deductible?</th></tr><tr><td>Camera, ring light, microphone, tripod</td><td>✅ Yes</td></tr><tr><td>Computer, phone (business use %)</td><td>✅ Partial</td></tr><tr><td>Internet bill (business use %)</td><td>✅ Partial</td></tr><tr><td>Home office (if dedicated)</td><td>✅ Yes</td></tr><tr><td>Props, costumes, backgrounds</td><td>✅ Yes</td></tr><tr><td>Editing software subscriptions</td><td>✅ Yes</td></tr><tr><td>Personal clothing (non-costume)</td><td>❌ No</td></tr><tr><td>Personal meals</td><td>❌ No</td></tr></table>
+          Keep receipts for everything. This is general information only — not tax advice.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">When do TikTok creators need to pay quarterly estimated taxes?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          If you expect to owe <strong>$1,000 or more</strong> for the year, the IRS requires quarterly payments.<table><tr><th>Quarter</th><th>Period</th><th>Due date</th></tr><tr><td>Q1</td><td>Jan–Mar</td><td>April 15</td></tr><tr><td>Q2</td><td>Apr–May</td><td>June 16</td></tr><tr><td>Q3</td><td>Jun–Aug</td><td>Sept 15</td></tr><tr><td>Q4</td><td>Sep–Dec</td><td>Jan 15 (next year)</td></tr></table>
+          Pay via <strong>irs.gov/payments</strong>. Use the Tax Estimator tab to calculate how much to set aside each quarter.
+        </div>
+      </div>
+
+      <div class="faq-category">💳 Payouts &amp; Platform</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What is the minimum withdrawal amount on TikTok LIVE?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          The minimum withdrawal for TikTok LIVE Diamonds is <strong>$100 USD</strong>, via PayPal (3–5 business days) or bank transfer (5–10 business days).<br><br>
+          TikTok may hold new creator earnings for up to 30 days when you first start withdrawing. Make sure your account is fully verified (ID + payment method) to avoid delays.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How do iOS vs Android purchases affect creator earnings?<span class="faq-chevron">▼</span></button>
+        <div class="faq-answer">
+          <table><tr><th></th><th>iOS</th><th>Android/Web</th></tr><tr><td>Viewer spends</td><td>$10.00</td><td>$10.00</td></tr><tr><td>Apple takes</td><td>$3.00</td><td>$0.00</td></tr><tr><td>TikTok's 50% cut</td><td>$3.50</td><td>$5.00</td></tr><tr><td><strong>Creator receives</strong></td><td><strong>~$3.50</strong></td><td><strong>~$5.00</strong></td></tr></table>
+          You earn about <strong>30% more per coin</strong> from Android/web purchases vs iOS. You can't control how viewers buy, but it's useful to know when estimating income.
+        </div>
+      </div>
+
+    </div><!-- end tab-faq -->
+
+  </div><!-- .hub -->
+
+  <div class="footer">
+    TikTok Battle Hub · For entertainment and planning purposes only · Not financial or tax advice
+  </div>
+
+</div><!-- .page-wrap -->
+
+<script>
+let platform = 'ios';
+let spPlatform = 'ios';
+let goalPlatform = 'ios';
+let logResult = 'win';
+
+// Load battles from localStorage for persistence
+let battles = [];
+try { battles = JSON.parse(localStorage.getItem('tiktok_battles') || '[]'); } catch(e) {}
+
+function saveBattles() {
+  try { localStorage.setItem('tiktok_battles', JSON.stringify(battles)); } catch(e) {}
+}
+
+function coinsToNet(coins, plat) {
+  const rawUSD = (coins / 2) * 0.005;
+  const afterStore = plat === 'ios' ? rawUSD * 0.7 : rawUSD;
+  const afterTT = afterStore * 0.5;
+  return { rawUSD, afterStore, afterTT };
+}
+
+function fmt(n) { return '$' + n.toFixed(2); }
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('tab-' + id);
+  if (panel) panel.classList.add('active');
+  btn.classList.add('active');
+}
+
+function setPlatform(p) {
+  platform = p;
+  document.getElementById('plat-ios').classList.toggle('active', p === 'ios');
+  document.getElementById('plat-and').classList.toggle('active', p === 'android');
+  calcEarnings();
+}
+
+function setSpPlatform(p) {
+  spPlatform = p;
+  document.getElementById('sp-ios').classList.toggle('active', p === 'ios');
+  document.getElementById('sp-and').classList.toggle('active', p === 'android');
+  calcSplit();
+}
+
+function setGoalPlatform(p) {
+  goalPlatform = p;
+  document.getElementById('goal-ios').classList.toggle('active', p === 'ios');
+  document.getElementById('goal-and').classList.toggle('active', p === 'android');
+  calcGoal();
+}
+
+function setResult(r) {
+  logResult = r;
+  document.getElementById('log-win').classList.toggle('active', r === 'win');
+  document.getElementById('log-loss').classList.toggle('active', r === 'loss');
+}
+
+function setScenario(c) {
+  document.getElementById('coins').value = c;
+  calcEarnings();
+}
+
+function calcEarnings() {
+  const coins = parseFloat(document.getElementById('coins').value) || 0;
+  const bpw = parseFloat(document.getElementById('battles').value) || 1;
+  const { rawUSD, afterStore, afterTT } = coinsToNet(coins, platform);
+  const storeCut = platform === 'ios' ? rawUSD * 0.3 : 0;
+  const ttCut = afterStore * 0.5;
+
+  document.getElementById('breakdown').innerHTML = `
+    <div class="breakdown-row"><span>Gross coin value</span><span>${fmt(rawUSD)}</span></div>
+    ${platform === 'ios' ? `<div class="breakdown-row"><span>Apple store cut (30%)</span><span class="cut">− ${fmt(storeCut)}</span></div>` : ''}
+    <div class="breakdown-row"><span>TikTok's 50% cut</span><span class="cut">− ${fmt(ttCut)}</span></div>
+    <div class="breakdown-row"><span><strong>You receive</strong></span><span class="net">${fmt(afterTT)}</span></div>
+  `;
+
+  document.getElementById('r-battle').textContent = fmt(afterTT);
+  document.getElementById('r-week').textContent = fmt(afterTT * bpw);
+  document.getElementById('r-month').textContent = fmt(afterTT * bpw * 4.3);
+}
+
+function calcScan() {
+  const your = parseFloat(document.getElementById('scan-your').value) || 0;
+  const opp = parseFloat(document.getElementById('scan-opp').value) || 0;
+  if (!your && !opp) { document.getElementById('scan-result').style.display = 'none'; return; }
+  const yn = coinsToNet(your, 'android').afterTT;
+  const on = coinsToNet(opp, 'android').afterTT;
+  document.getElementById('scan-you-earn').textContent = fmt(yn);
+  document.getElementById('scan-opp-earn').textContent = fmt(on);
+  document.getElementById('scan-winner').textContent = your > opp ? 'You 🏆' : opp > your ? 'Opponent 🏆' : 'Tie';
+  document.getElementById('scan-diff').textContent = Math.abs(your - opp).toLocaleString() + ' coins';
+  document.getElementById('scan-total').textContent = (your + opp).toLocaleString() + ' coins';
+  document.getElementById('scan-result').style.display = 'block';
+}
+
+function handleScan(e) {
+  if (e.target.files && e.target.files[0]) {
+    document.getElementById('scan-ai-note').style.display = 'block';
+  }
+}
+
+function calcSplit() {
+  const coins = parseFloat(document.getElementById('sp-coins').value) || 0;
+  const pct = parseFloat(document.getElementById('sp-pct').value) || 60;
+  document.getElementById('sp-pct-label').textContent = pct;
+  document.getElementById('sp-bar-a').style.width = pct + '%';
+  document.getElementById('sp-bar-b').style.width = (100 - pct) + '%';
+
+  const totalNet = coinsToNet(coins, spPlatform).afterTT;
+  const gross = coinsToNet(coins, spPlatform).rawUSD;
+  const fees = gross - totalNet;
+
+  const youGet = totalNet * (pct / 100);
+  const cohostGet = totalNet * ((100 - pct) / 100);
+
+  document.getElementById('sp-you').textContent = fmt(youGet);
+  document.getElementById('sp-cohost').textContent = fmt(cohostGet);
+  document.getElementById('sp-fees').textContent = fmt(fees);
+}
+
+function addLog() {
+  const coins = parseFloat(document.getElementById('log-coins').value) || 0;
+  const opp = document.getElementById('log-opp').value || 'Unknown';
+  if (!coins) return;
+  const earned = coinsToNet(coins, 'android').afterTT;
+  battles.push({ coins, opp, result: logResult, earned, date: new Date().toLocaleDateString() });
+  document.getElementById('log-coins').value = '';
+  document.getElementById('log-opp').value = '';
+  saveBattles();
+  renderLog();
+}
+
+function clearLog() {
+  if (confirm('Clear all battle logs?')) {
+    battles = [];
+    saveBattles();
+    renderLog();
+  }
+}
+
+function renderLog() {
+  const list = document.getElementById('log-list');
+  const empty = document.getElementById('log-empty');
+  const stats = document.getElementById('log-stats');
+
+  if (battles.length === 0) { empty.style.display = 'block'; stats.style.display = 'none'; list.innerHTML = ''; return; }
+  empty.style.display = 'none';
+  stats.style.display = 'block';
+
+  const total = battles.reduce((s, b) => s + b.earned, 0);
+  const wins = battles.filter(b => b.result === 'win').length;
+  const best = Math.max(...battles.map(b => b.earned));
+
+  document.getElementById('log-total').textContent = fmt(total);
+  document.getElementById('log-winrate').textContent = Math.round((wins / battles.length) * 100) + '%';
+  document.getElementById('log-best').textContent = fmt(best);
+
+  list.innerHTML = '<div class="card" style="margin-bottom:1rem;"><div class="section-title">Recent battles</div>' +
+    battles.slice().reverse().slice(0, 8).map(b =>
+      `<div class="log-entry">
+        <div>
+          <div style="font-weight:500; font-size:13px; color: var(--color-text-primary);">vs ${b.opp}</div>
+          <div style="font-size:11px; color: var(--color-text-secondary);">${b.date} · ${b.coins.toLocaleString()} coins</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:13px; font-weight:500; color:#3B6D11;">${fmt(b.earned)}</span>
+          <span class="badge ${b.result}">${b.result}</span>
+        </div>
+      </div>`
+    ).join('') + '</div>';
+}
+
+function calcGoal() {
+  const target = parseFloat(document.getElementById('goal-target').value) || 0;
+  const avgCoins = parseFloat(document.getElementById('goal-avgcoins').value) || 1;
+  const progress = parseFloat(document.getElementById('goal-progress').value) || 0;
+
+  const perBattle = coinsToNet(avgCoins, goalPlatform).afterTT;
+  const battlesNeeded = Math.ceil(target / perBattle);
+  const totalCoins = battlesNeeded * avgCoins;
+  const dailyCoins = Math.ceil(totalCoins / 7);
+  const pct = Math.min(100, Math.round((progress / dailyCoins) * 100));
+
+  document.getElementById('goal-battles').textContent = battlesNeeded;
+  document.getElementById('goal-total-coins').textContent = totalCoins.toLocaleString();
+  document.getElementById('goal-daily').textContent = dailyCoins.toLocaleString();
+  document.getElementById('goal-bar').style.width = pct + '%';
+  document.getElementById('goal-pct').textContent = pct + '% of daily target';
+}
+
+function calcTax() {
+  const monthly = parseFloat(document.getElementById('tax-monthly').value) || 0;
+  const annual = monthly * 12;
+  const seTax = annual * 0.153;
+  const seDeduct = seTax / 2;
+  const taxable = annual - seDeduct;
+
+  let fedRate = 0.10;
+  const filing = document.getElementById('tax-filing').value;
+  if (filing === 'single') {
+    // 2024 Single brackets
+    if (taxable > 609350) fedRate = 0.37;
+    else if (taxable > 243725) fedRate = 0.35;
+    else if (taxable > 191950) fedRate = 0.32;
+    else if (taxable > 100525) fedRate = 0.24;
+    else if (taxable > 47150) fedRate = 0.22;
+    else if (taxable > 11600) fedRate = 0.12;
+  } else if (filing === 'married') {
+    // 2024 Married filing jointly (same as qualifying surviving spouse)
+    if (taxable > 731200) fedRate = 0.37;
+    else if (taxable > 487450) fedRate = 0.35;
+    else if (taxable > 383900) fedRate = 0.32;
+    else if (taxable > 201050) fedRate = 0.24;
+    else if (taxable > 94300) fedRate = 0.22;
+    else if (taxable > 23200) fedRate = 0.12;
+  } else if (filing === 'married_sep') {
+    // 2024 Married filing separately (same thresholds as single but half of MFJ)
+    if (taxable > 365600) fedRate = 0.37;
+    else if (taxable > 243725) fedRate = 0.35;
+    else if (taxable > 191950) fedRate = 0.32;
+    else if (taxable > 100525) fedRate = 0.24;
+    else if (taxable > 47150) fedRate = 0.22;
+    else if (taxable > 11600) fedRate = 0.12;
+  } else if (filing === 'surviving') {
+    // 2024 Qualifying surviving spouse — same as married filing jointly
+    if (taxable > 731200) fedRate = 0.37;
+    else if (taxable > 487450) fedRate = 0.35;
+    else if (taxable > 383900) fedRate = 0.32;
+    else if (taxable > 201050) fedRate = 0.24;
+    else if (taxable > 94300) fedRate = 0.22;
+    else if (taxable > 23200) fedRate = 0.12;
+  } else {
+    // 2024 Head of household
+    if (taxable > 609350) fedRate = 0.37;
+    else if (taxable > 243700) fedRate = 0.35;
+    else if (taxable > 191950) fedRate = 0.32;
+    else if (taxable > 100500) fedRate = 0.24;
+    else if (taxable > 63100) fedRate = 0.22;
+    else if (taxable > 16550) fedRate = 0.12;
+  }
+
+  const fedTax = taxable * fedRate;
+  const totalTax = seTax + fedTax;
+  const effectiveRate = annual > 0 ? Math.round((totalTax / annual) * 100) : 0;
+  const setAside = monthly * (totalTax / annual || 0);
+
+  document.getElementById('tax-annual').textContent = '$' + Math.round(annual).toLocaleString();
+  document.getElementById('tax-setaside').textContent = fmt(setAside);
+  document.getElementById('tax-rate').textContent = effectiveRate + '%';
+  document.getElementById('tax-se').textContent = '$' + Math.round(seTax / 12).toLocaleString() + '/mo';
+  document.getElementById('tax-fed').textContent = '$' + Math.round(fedTax / 12).toLocaleString() + '/mo';
+  document.getElementById('tax-deduct').textContent = '− $' + Math.round(seDeduct).toLocaleString() + '/yr';
+}
+
+function calcTTEarn() {
+  const followers = parseFloat(document.getElementById('tte-followers').value) || 0;
+  const views     = parseFloat(document.getElementById('tte-views').value) || 0;
+  const vpw       = parseFloat(document.getElementById('tte-vpw').value) || 1;
+  const eng       = parseFloat(document.getElementById('tte-eng').value) || 0;
+  const niche     = parseFloat(document.getElementById('tte-niche').value) || 1.0;
+
+  const vpm       = vpw * 4.3;
+  const monthlyViews = views * vpm;
+
+  // Tier
+  let tier, tierColor, tierBg;
+  if (followers >= 1_000_000)      { tier = 'Mega / Celebrity'; tierColor = '#7C3AED'; tierBg = '#EDE9FE'; }
+  else if (followers >= 500_000)   { tier = 'Macro Influencer';  tierColor = '#D85A30'; tierBg = '#FEF0EB'; }
+  else if (followers >= 100_000)   { tier = 'Mid-Tier Influencer'; tierColor = '#3B6D11'; tierBg = '#EAF3DE'; }
+  else if (followers >= 10_000)    { tier = 'Micro Influencer';  tierColor = '#185FA5'; tierBg = '#E8F0FE'; }
+  else                             { tier = 'Nano Influencer';   tierColor = '#888780'; tierBg = '#F3F3F2'; }
+
+  document.getElementById('tte-tier').textContent = tier;
+  document.getElementById('tte-tier').style.background = tierBg;
+  document.getElementById('tte-tier').style.color = tierColor;
+
+  // Creator Fund: $0.02–$0.04 per 1K views × niche multiplier
+  const fundLow  = (monthlyViews / 1000) * 0.02 * niche;
+  const fundHigh = (monthlyViews / 1000) * 0.04 * niche;
+
+  // Brand deal rate per post by tier
+  let brandPerPostLow, brandPerPostHigh;
+  if (followers >= 1_000_000)    { brandPerPostLow = 2000;  brandPerPostHigh = 20000; }
+  else if (followers >= 500_000) { brandPerPostLow = 1000;  brandPerPostHigh = 5000;  }
+  else if (followers >= 100_000) { brandPerPostLow = 300;   brandPerPostHigh = 1500;  }
+  else if (followers >= 10_000)  { brandPerPostLow = 50;    brandPerPostHigh = 300;   }
+  else                           { brandPerPostLow = 10;    brandPerPostHigh = 50;    }
+
+  // Brand deals scale with posting frequency (more videos = more visibility = more deals)
+  // Capped so it stays realistic: max ~4/mo for smaller creators, ~8/mo for large
+  const engBoost = Math.min(2.5, 1 + (eng / 10));
+  const maxDeals = followers >= 100_000 ? 8 : 4;
+  const brandDealsPerMonth = Math.min(maxDeals, Math.max(1, Math.round(vpw * 4.3 / 4)));
+  const brandLow  = brandPerPostLow  * brandDealsPerMonth * engBoost * niche;
+  const brandHigh = brandPerPostHigh * brandDealsPerMonth * engBoost * niche;
+
+  // Affiliate: ~5–15% of brand deal range
+  const affLow  = brandLow  * 0.05;
+  const affHigh = brandHigh * 0.15;
+
+  const totalLow  = fundLow  + brandLow  + affLow;
+  const totalHigh = fundHigh + brandHigh + affHigh;
+  const totalAvg  = (totalLow + totalHigh) / 2;
+  const perVideo  = totalAvg / vpm;
+
+  const fmtK = n => n >= 1000 ? '$' + (n/1000).toFixed(1) + 'K' : '$' + Math.round(n);
+
+  document.getElementById('tte-range').textContent =
+    fmtK(totalLow) + ' – ' + fmtK(totalHigh);
+  document.getElementById('tte-avg').textContent =
+    'Average: ' + fmtK(totalAvg) + '/mo';
+  document.getElementById('tte-fund').textContent =
+    fmtK(fundLow) + ' – ' + fmtK(fundHigh);
+  document.getElementById('tte-brand').textContent =
+    fmtK(brandLow) + ' – ' + fmtK(brandHigh);
+  document.getElementById('tte-affiliate').textContent =
+    fmtK(affLow) + ' – ' + fmtK(affHigh);
+
+  document.getElementById('tte-vpm').textContent = Math.round(vpm);
+  document.getElementById('tte-mviews').textContent =
+    monthlyViews >= 1_000_000
+      ? (monthlyViews / 1_000_000).toFixed(1) + 'M'
+      : (monthlyViews / 1000).toFixed(0) + 'K';
+  document.getElementById('tte-pervideo').textContent = fmtK(perVideo);
+}
+
+// Init
+calcEarnings();
+calcSplit();
+calcGoal();
+calcTax();
+calcTTEarn();
+renderLog();
+</script>
+
+<!-- FAQ Schema Markup for Google Rich Results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How much is 1 TikTok coin worth in USD?","acceptedAnswer":{"@type":"Answer","text":"1 TikTok coin costs viewers approximately $0.015 USD. As a creator, you receive roughly $0.005 per coin after TikTok's 50% revenue share. So 10,000 coins = ~$50 gross, but your payout is closer to $25."}},
+    {"@type":"Question","name":"What percentage does TikTok take from gifts and battles?","acceptedAnswer":{"@type":"Answer","text":"TikTok keeps approximately 50% of all gift revenue. On iOS, Apple takes an additional 30% from the viewer's payment first. Creators receive ~35 cents per iOS dollar spent, and ~50 cents per Android/web dollar spent."}},
+    {"@type":"Question","name":"How much do TikTok battles pay?","acceptedAnswer":{"@type":"Answer","text":"Small creators (under 10K followers) earn $12–$50 per battle. Mid-tier (10K–100K) earn $50–$250. Large creators (100K–500K) earn $250–$1,250. Top streamers (500K+) earn $1,250 or more per battle. Estimates are after TikTok's 50% cut using Android purchase rates."}},
+    {"@type":"Question","name":"Do TikTok creators have to pay taxes on their earnings?","acceptedAnswer":{"@type":"Answer","text":"Yes. All TikTok income is taxable. Creators are considered self-employed and must pay self-employment tax (15.3%) plus federal income tax. TikTok does not withhold taxes. Set aside 25–35% of every payout and make quarterly estimated payments to the IRS."}},
+    {"@type":"Question","name":"Does TikTok send a 1099 tax form to creators?","acceptedAnswer":{"@type":"Answer","text":"Yes, TikTok sends a 1099-NEC to creators who earn over $600 in a calendar year. Even under $600, all self-employment income must still be reported on your tax return."}},
+    {"@type":"Question","name":"How much does the TikTok Creator Fund pay per 1,000 views?","acceptedAnswer":{"@type":"Answer","text":"The legacy Creator Fund pays $0.02–$0.04 per 1,000 views. The Creativity Program pays $0.40–$1.00+ per 1,000 views for videos over 1 minute long."}},
+    {"@type":"Question","name":"What is the minimum withdrawal on TikTok LIVE?","acceptedAnswer":{"@type":"Answer","text":"The minimum withdrawal for TikTok LIVE Diamonds is $100 USD via PayPal (3–5 business days) or bank transfer (5–10 business days)."}},
+    {"@type":"Question","name":"How do iOS vs Android purchases affect creator earnings?","acceptedAnswer":{"@type":"Answer","text":"Creators earn about 30% more per coin from Android/web purchases vs iOS. For every $10 an iOS viewer spends, a creator receives ~$3.50. For every $10 an Android viewer spends, a creator receives ~$5.00."}},
+    {"@type":"Question","name":"Does the winner of a TikTok battle earn more?","acceptedAnswer":{"@type":"Answer","text":"Both creators earn from their own side's gifts. Winning does not change your payout directly, but it boosts visibility and motivates audiences to gift more aggressively."}}
+  ]
+}
+</script>
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>
